@@ -1,0 +1,16 @@
+---
+common_packages_debian:
+  - build-essential
+  - net-tools
+  - bc
+  - jq
+  - direnv
+  - tcpdump
+  - audacity
+  - nmap
+  - vim
+  - tree
+  - ansible
+  - bash-completion
+  - python3-passlib
+...

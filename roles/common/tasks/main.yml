@@ -1,0 +1,45 @@
+---
+# rodando em /home/cesar/Documentos/ansible/curso
+# Atualizando sistema
+
+- name: Atualizando o Sistema Operacional
+  apt:
+    name: '*'
+    state: latest
+    
+
+- name: Instalação de Pacotes
+  apt:
+    name: '{{ common_packages_debian }}'
+    state: latest
+
+- name: Atualizando o timezone
+  ansible.builtin.file:
+    src: /usr/share/zoneinfo/America/Sao_Paulo
+    dest: /etc/localtime
+    owner: root
+    group: root
+    state: link
+
+# # Copiando arquivos usando Files
+# - name: Copiando arquivo de Backup
+#   copy:
+#     src: backup.tar.gz
+#     dest: /tmp/backup.tar.gz
+
+# # Copiando um template
+# - name: Copiando o arquivo motd
+#   template:
+#     src: motd
+#     dest: /etc/motd
+#     force: yes
+#     owner: root
+#     group: root
+
+# # Instalação do NGINX
+# - name: Instalação do Nginx
+#   yum:
+#     name: nginx
+#     state: latest
+#   notify: Restart NGINX
+...

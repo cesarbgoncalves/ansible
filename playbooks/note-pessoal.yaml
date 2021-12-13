@@ -1,0 +1,25 @@
+---
+- name: "Playbook de configuração inicial do notebook do Cesar"
+  hosts: all
+  gather_facts: false
+  vars_prompt:
+  - name: user_name    
+    prompt: "Digite um nome para o usuário"    
+    private: no    
+    confirm: no    
+    salt_size: 7
+
+  - name: user_password
+    prompt: "Digite uma senha para o usuário"    
+    private: yes    
+    # encrypt: "md5_crypt" # necessário instalar python-passlib na máquina local    
+    confirm: no
+    salt_size: 7
+  vars:
+    user_name: "{{user_name}}"
+    user_password: "{{user_password}}"
+  roles:
+    - create-user
+     - common
+     - docker
+...

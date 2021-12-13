@@ -1,0 +1,30 @@
+---
+# tasks file for create-user
+
+- name: "Adicionando o usuário {{user_name}}"
+  user:
+    name: "{{user_name}}"
+    password: "{{user_password | password_hash('sha512')}}"
+    home: "/home/{{user_name}}"
+    shell: "/bin/bash"
+    ssh_key_file: id_rsa
+
+- name: "Adicionando usuário no arquivo Sudoers"
+  lineinfile:
+    dest: /etc/sudoers
+    line: "{{user_name}}  ALL=(ALL:ALL) NOPASSWD: ALL"
+
+- name: Criando Diretorio SSH
+  file:
+    path: /home/{{user_name}}/.ssh
+    state: directory
+
+- name: Copiando arquivos SSH
+  copy: src={{ item.src }} dest={{item.dest}}
+  with_items:
+    - { src: 'id_rsa', dest: '/home/{{user_name}}/.ssh/id_rsa'}
+    - { src: 'id_rsa.pub', dest: '/home/{{user_name}}/.ssh/id_rsa'}
+    - { src: 'prod_rsa', dest: '/home/{{user_name}}/.ssh/prod_rsa'}
+    - { src: 'prod_rsa.pub', dest: '/home/{{user_name}}/.ssh/prod_rsa.pub'}
+
+...
