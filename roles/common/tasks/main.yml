@@ -6,7 +6,11 @@
   apt:
     name: '*'
     state: latest
-    
+
+- name: Limpando Pacotes desnecessários
+  apt:
+    autoremove: yes
+    purge: yes
 
 - name: Instalação de Pacotes
   apt:
@@ -21,20 +25,15 @@
     group: root
     state: link
 
-# # Copiando arquivos usando Files
-# - name: Copiando arquivo de Backup
-#   copy:
-#     src: backup.tar.gz
-#     dest: /tmp/backup.tar.gz
-
-# # Copiando um template
-# - name: Copiando o arquivo motd
-#   template:
-#     src: motd
-#     dest: /etc/motd
-#     force: yes
-#     owner: root
-#     group: root
+# Copiando um template
+- name: Copiando o arquivo de configuracao do VIM
+  template:
+    src: .vimrc
+    dest: /home/{{user_name}}/.vimrc
+    force: yes
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: "0644"
 
 # # Instalação do NGINX
 # - name: Instalação do Nginx

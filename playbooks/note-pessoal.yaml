@@ -20,6 +20,6 @@
     user_password: "{{user_password}}"
   roles:
     - create-user
-     - common
-     - docker
+    - common
+    - docker
 ...

@@ -11,19 +11,27 @@
 
 - name: "Adicionando usuário no arquivo Sudoers"
   lineinfile:
-    dest: /etc/sudoers
+    dest: "/etc/sudoers"
     line: "{{user_name}}  ALL=(ALL:ALL) NOPASSWD: ALL"
 
 - name: Criando Diretorio SSH
   file:
-    path: /home/{{user_name}}/.ssh
+    path: "/home/{{user_name}}/.ssh"
     state: directory
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: '0755'
 
 - name: Copiando arquivos SSH
-  copy: src={{ item.src }} dest={{item.dest}}
+  copy: 
+    src: "{{ item.src }}"
+    dest: "{{item.dest}}"
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: '0644'
   with_items:
     - { src: 'id_rsa', dest: '/home/{{user_name}}/.ssh/id_rsa'}
-    - { src: 'id_rsa.pub', dest: '/home/{{user_name}}/.ssh/id_rsa'}
+    - { src: 'id_rsa.pub', dest: '/home/{{user_name}}/.ssh/id_rsa.pub'}
     - { src: 'prod_rsa', dest: '/home/{{user_name}}/.ssh/prod_rsa'}
     - { src: 'prod_rsa.pub', dest: '/home/{{user_name}}/.ssh/prod_rsa.pub'}
 

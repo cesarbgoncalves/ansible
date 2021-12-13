@@ -1,11 +1,11 @@
 ---
-  - name: Update apt cache
+  - name: Atualizacao de Cache
     apt: update_cache=yes cache_valid_time=3600
 
-  - name: Upgrade all apt packages
+  - name: Atualizacao dos Pacotes da Distribuicao
     apt: upgrade=dist
 
-  - name: Install dependencies
+  - name: Instalando as dependencias
     apt:
       name: "{{ packages }}"
       state: present
@@ -18,12 +18,12 @@
       - software-properties-common
       - gnupg-agent
     
-  - name: Add an apt signing key for Docker
+  - name: Adicionando a Chave de Acesso ao Repositorio Docker
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
-  - name: Add apt repository for stable version
+  - name: Adicionando Repositorio Docker para instalar via apt
     apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
       state: present
@@ -41,7 +41,7 @@
 
   - name: Add user to docker group
     user:
-      name: "{{ansible_user}}"
+      name: "{{user_name}}"
       group: docker
 
   - name: Download docker-compose {{ docker_compose_version }}
@@ -56,6 +56,6 @@
     stat: path=~/docker-compose
     register: docker_compose
 
-  - name: Move docker-compose to /usr/local/bin/docker-compose
+  - name: Movendo binario do Docker Compose paa /usr/local/bin
     command: mv ~/docker-compose /usr/local/bin/docker-compose
     when: docker_compose.stat.exists
