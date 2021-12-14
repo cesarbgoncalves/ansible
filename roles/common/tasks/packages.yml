@@ -1,0 +1,45 @@
+---
+  - name: Adicionando Repositorio CopyQ
+    apt_repository:
+      repo: ppa:hluk/copyq
+
+  - name: Adicionando a Chave de Acesso ao Repositorio AnyDesk
+    apt_key:
+      url: hthttps://keys.anydesk.com/repos/DEB-GPG-KEY
+      state: present
+
+  - name: Instalando o Repositorio do AnyDesk
+    apt_repository:
+      repo: deb [arch=amd64] http://deb.anydesk.com/ all main
+      state: present
+  
+  - name: Adicionando Chave de Repo do Chrome
+    apt_key:
+      url: https://dl.google.com/linux/linux_signing_key.pub
+      state: present
+  
+  - name: Instalando o Repositório do Chrome
+    apt_repository:
+      repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      state: present
+
+# Atualização do Cache e Pacotes
+
+  - name: Atualizacao de Cache
+    apt: update_cache=yes cache_valid_time=3600
+
+  - name: Atualizacao dos Pacotes da Distribuicao
+    apt: upgrade=dist
+################################
+
+
+  - name: Instalacao do Chrome
+    apt:
+      name: google-chrome-stable
+      state: present
+      update_cache: yes
+
+  - name: Instalando o CopyQ
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+      state: present
