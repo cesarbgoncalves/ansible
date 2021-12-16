@@ -1,6 +1,7 @@
 ---
 - name: "Playbook de configuração inicial do notebook do Cesar"
   hosts: all
+  ignore_unreachable: yes
   gather_facts: false
   vars_prompt:
   - name: user_name    

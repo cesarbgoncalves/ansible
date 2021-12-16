@@ -1,2 +1,9 @@
 ---
 # handlers file for note-pessoal
+
+- name: Atualizacao de Cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+...

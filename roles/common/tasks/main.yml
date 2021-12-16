@@ -7,11 +7,11 @@
     name: '*'
     state: latest
 
-- name: Limpando Pacotes desnecessários
-  apt:
-    autoremove: yes
-    purge: yes
-
+#- name: Limpando Pacotes desnecessários
+#  apt:
+#    autoremove: yes
+#    purge: yes
+#
 - name: Instalação de Pacotes
   apt:
     name: '{{ common_packages_debian }}'
@@ -35,10 +35,129 @@
     group: "{{user_name}}"
     mode: "0644"
 
-# # Instalação do NGINX
-# - name: Instalação do Nginx
-#   yum:
-#     name: nginx
-#     state: latest
-#   notify: Restart NGINX
+- name: Copiando o arquivo de configuracao do Bashrc
+  template:
+    src: .bashrc
+    dest: /home/{{user_name}}/.bashrc
+    force: yes
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: "0644"
+    
+- name: Adicionando Repositorio CopyQ
+  apt_repository:
+    repo: ppa:hluk/copyq
+
+- name: Adicionando a Chave de Acesso ao Repositorio AnyDesk
+  apt_key:
+    url: https://keys.anydesk.com/repos/DEB-GPG-KEY
+    state: present
+  notify: Atualizacao de Cache
+
+- name: Adicionando o Repositorio do AnyDesk
+  apt_repository:
+    repo: deb [arch=amd64] http://deb.anydesk.com/ all main
+    state: present
+  notify: Atualizacao de Cache 
+
+- name: Adicionando Chave de Repo do Chrome
+  apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
+
+- name: Adicionando o Repositório do Chrome
+  apt_repository:
+    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+  notify: Atualizacao de Cache
+
+- name: Instalacao do Chrome
+  apt:
+    name: google-chrome-stable
+    state: present
+    update_cache: yes
+
+- name: Instalacao do CopyQ
+  apt:
+    name: copyq
+    state: present
+    update_cache: yes
+    
+- name: Instalacao do AnyDesk
+  apt:
+    name: anydesk
+    state: present
+    update_cache: yes
+
+- name: Baixando e instalando aws cli v2
+  unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Baixando e instalando appimagelauncher
+  apt:
+    deb: https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
+
+- name: Criando um diretório para o PlugVim
+  file:
+    path: /home/{{user_name}}/.vim/autoload
+    state: directory
+    mode: '0755'
+
+- name: Instalando o PlugVim
+  template:
+    src: 
+    dest: /home/{{user_name}}/.vim/autoload/plug.vim
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+
+- name: Adicionando a Chave de Acesso ao Repositorio HELM
+  apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+    state: present
+    
+- name: Adicionando Repositório HELM
+  ansible.builtin.apt_repository:
+    repo: deb https://baltocdn.com/helm/stable/debian/ all main
+    state: present
+    filename: repo-helm
+  notify: Atualizacao de Cache
+  
+- name: Instalando HELM 3
+  apt:
+    name: helm
+
+- name: Instalando kubectl
+  get_url:
+    url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: '0750'
+
+- name: Instalando o Lens
+  apt:
+    deb: https://api.k8slens.dev/binaries/Lens-5.3.3-latest.20211214.2.amd64.deb
+
+- name: Instalando o MegaSync
+  apt:
+    deb: https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync-xUbuntu_20.04_amd64.deb
+
+- name: Instalando o Notion via Snap
+  community.general.snap:
+    name:
+      - notion-snap
+
+- name: Instalando o navegador Vivaldi
+  apt:
+    deb: https://downloads.vivaldi.com/stable/vivaldi-stable_5.0.2497.32-1_amd64.deb
+    
+
+
+
+
+
+
+
+
+
 ...

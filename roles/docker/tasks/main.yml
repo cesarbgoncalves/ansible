@@ -38,6 +38,7 @@
       - docker-ce
       - docker-ce-cli 
       - containerd.io
+    ignore_errors: yes
 
   - name: Add user to docker group
     user:

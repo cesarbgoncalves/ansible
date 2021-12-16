@@ -13,4 +13,31 @@ common_packages_debian:
   - ansible
   - bash-completion
   - python3-passlib
+  - audacity
+  - ffmpeg                                                     
+  - fonts-cascadia-code                                        
+  - fonts-dejavu-core                                          
+  - fonts-dejavu-extra                                         
+  - g++                                                        
+  - gcc                                                        
+  - gimp                                                       
+  - htop
+  - remmina                                                    
+  - remmina-common                                             
+  - remmina-plugin-rdp:amd64                                   
+  - sshpass                                                    
+  - terminator
+  - virtualbox                                                 
+  - ntp
+    #  - virtualbox-dkms                                            
+    #  - virtualbox-ext-pack                                        
+    #  - virtualbox-guest-additions-iso                             
+    #  - virtualbox-qt                                              
+  - telegram-desktop 
+  - vlc
+  - whois
+  - xclip
+
+
+
 ...
