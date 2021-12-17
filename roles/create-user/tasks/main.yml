@@ -4,10 +4,12 @@
 - name: "Adicionando o usuário {{user_name}}"
   user:
     name: "{{user_name}}"
+    comment: "{{user_comment}}"
     password: "{{user_password | password_hash('sha512')}}"
     home: "/home/{{user_name}}"
     shell: "/bin/bash"
     ssh_key_file: id_rsa
+    update_password: on_create
 
 - name: "Adicionando usuário no arquivo Sudoers"
   lineinfile:

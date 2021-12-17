@@ -1,5 +1,4 @@
 ---
-# rodando em /home/cesar/Documentos/ansible/curso
 # Atualizando sistema
 
 - name: Atualizando o Sistema Operacional
@@ -7,11 +6,6 @@
     name: '*'
     state: latest
 
-#- name: Limpando Pacotes desnecessários
-#  apt:
-#    autoremove: yes
-#    purge: yes
-#
 - name: Instalação de Pacotes
   apt:
     name: '{{ common_packages_debian }}'
@@ -107,7 +101,7 @@
 
 - name: Instalando o PlugVim
   template:
-    src: 
+    src: plug.vim 
     dest: /home/{{user_name}}/.vim/autoload/plug.vim
     owner: "{{user_name}}"
     group: "{{user_name}}"
@@ -132,7 +126,9 @@
   get_url:
     url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
     dest: /usr/local/bin/kubectl
-    mode: '0750'
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: '0777'
 
 - name: Instalando o Lens
   apt:
@@ -150,14 +146,39 @@
 - name: Instalando o navegador Vivaldi
   apt:
     deb: https://downloads.vivaldi.com/stable/vivaldi-stable_5.0.2497.32-1_amd64.deb
+
+- name: Configurando a rede para gnorar ipv6
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX='
+    line: GRUB_CMDLINE_LINUX="ipv6.disable=1"
+  notify: Atualiza grub
+
+- name: Preparando ambiente para instalação do Tema Dracula no VIM
+  ansible.builtin.file:
+    path: /home/{{user_name}}/.vim/pack/themes/start
+    state: directory
+    mode: '0755' 
     
+- name: Clonando repositorio Dracula
+  git:
+    repo: https://github.com/dracula/vim.git
+    dest: /home/{{user_name}}/.vim/pack/themes/start
 
+- name: Instalando o Microsoft Teams
+  apt:
+    deb: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.4.00.7556_amd64.deb
 
+- name: Criando diretorio para appimages
+  ansible.builtin.file:
+    path: /home/{{user_name}}/Applications
+    state: directory
+    mode: '0755' 
 
-
-
-
-
-
-
-...
+- name: Instalando o Todoist
+  get_url:
+    url: https://todoist.com/linux_app/appimage
+    dest: /home/{{user_name}}/Applications/Todoist-1.0.3.AppImage
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: '0777'

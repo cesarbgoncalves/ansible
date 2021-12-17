@@ -10,6 +10,12 @@
     confirm: no    
     salt_size: 7
 
+  - name: user_comment
+    prompt: "Digite o nome completo para o usuário"    
+    private: no    
+    confirm: no    
+    salt_size: 7
+
   - name: user_password
     prompt: "Digite uma senha para o usuário"    
     private: yes    
@@ -19,6 +25,7 @@
   vars:
     user_name: "{{user_name}}"
     user_password: "{{user_password}}"
+    user_comment: "{{user_comment}}"
   roles:
     - create-user
     - common

@@ -1,5 +1,6 @@
 ---
 common_packages_debian:
+  - git
   - build-essential
   - net-tools
   - bc
