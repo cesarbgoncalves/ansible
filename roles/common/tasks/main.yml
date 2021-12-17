@@ -122,13 +122,13 @@
   apt:
     name: helm
 
-- name: Instalando kubectl
-  get_url:
-    url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
-    dest: /usr/local/bin/kubectl
-    owner: "{{user_name}}"
-    group: "{{user_name}}"
-    mode: '0777'
+#- name: Instalando kubectl
+#  get_url:
+#    url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+#    dest: /usr/local/bin/kubectl
+#    owner: "{{user_name}}"
+#    group: "{{user_name}}"
+#    mode: '0777'
 
 - name: Instalando o Lens
   apt:
@@ -156,14 +156,14 @@
 
 - name: Preparando ambiente para instalação do Tema Dracula no VIM
   ansible.builtin.file:
-    path: /home/{{user_name}}/.vim/pack/themes/start
+    path: /home/{{user_name}}/.vim/pack/themes/start/dracula
     state: directory
     mode: '0755' 
     
 - name: Clonando repositorio Dracula
   git:
     repo: https://github.com/dracula/vim.git
-    dest: /home/{{user_name}}/.vim/pack/themes/start
+    dest: /home/{{user_name}}/.vim/pack/themes/start/dracula
 
 - name: Instalando o Microsoft Teams
   apt:
@@ -182,3 +182,15 @@
     owner: "{{user_name}}"
     group: "{{user_name}}"
     mode: '0777'
+
+- name: Clonando repositorio tfenv
+  git:
+    repo: https://github.com/tfutils/tfenv.git
+    dest: /home/{{user_name}}/.tfenv
+
+- name: Definindo DNS Cloudflare e Google
+  net_system:
+    name_servers:
+      - 1.1.1.1
+      - 8.8.8.8
+

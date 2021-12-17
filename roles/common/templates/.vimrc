@@ -1,17 +1,20 @@
 "Instalacao de Plugins:
 call plug#begin('~/.vim/plugged')
 Plug 'dracula/vim',{'as':'dracula'}
-Plug 'ycm-core/YouCompleteMe'
 Plug 'preservim/nerdtree'
-
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 "Instalacao de Plugins
 
 
 
 " Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
+"     autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Se abrir o vim sem chamar nenhum arquivo, abre o NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 colorscheme dracula
 set encoding=utf-8
@@ -45,3 +48,4 @@ set relativenumber	    " Mostra as linhas com base onde está o cursor
 set wildmenu		    " Mostra o menu suspenso
 set confirm		    
 set backspace=indent,eol,start
+set splitright		    " Abri arquivos ao lado do arquivo atual no NERDTree
