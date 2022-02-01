@@ -1,12 +1,32 @@
 ---
-# handlers file for note-pessoal
+# handlers file for common tasks
 
 - name: Atualizacao de Cache
+  become: yes
   apt:
     update_cache: yes
     cache_valid_time: 3600
 
 - name: Atualiza grub
+  become: yes
   shell:
     cmd: update-grub
+  notify: Reiniciando o Computador
+
+- name: Reiniciando o Computador
+  become: yes
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  notify: "Aguardando Reinicializacao"
+
+- name: Aguardando Reinicializacao
+  become: yes
+  wait_for:
+    port: 22
+    host: '{{ansible_ssh_host}}'
+    search_regex: OpenSSH
+    delay: 10
+    timeout: 60
+  connection: local
 ...

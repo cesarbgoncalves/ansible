@@ -11,10 +11,21 @@
     ssh_key_file: id_rsa
     update_password: on_create
 
-- name: "Adicionando usuário no arquivo Sudoers"
+- name: "Criando arquivo de entrada no Suders para o usuário {{user_name}}"
+  file:
+    path: "/etc/sudoers.d/{{user_name}}"
+    state: touch
+    mode: '0600'
+
+- name: "Configurando sudo sem senha para o usuario {{user_name}}"
   lineinfile:
-    dest: "/etc/sudoers"
+    dest: "/etc/sudoers.d/{{user_name}}"
     line: "{{user_name}}  ALL=(ALL:ALL) NOPASSWD: ALL"
+    validate: 'visudo -cf %s'
+
+- name: Usuário criado
+  shell: id "{{user_name}}"
+  register: new_user_created
 
 - name: Criando Diretorio SSH
   file:
@@ -37,4 +48,6 @@
     - { src: 'prod_rsa', dest: '/home/{{user_name}}/.ssh/prod_rsa'}
     - { src: 'prod_rsa.pub', dest: '/home/{{user_name}}/.ssh/prod_rsa.pub'}
 
+- debug:
+    msg: "{{ new_user_created.stdout_lines[0] }}"
 ...

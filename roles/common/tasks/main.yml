@@ -1,18 +1,48 @@
 ---
-# Atualizando sistema
+# Main tasks for common role
+
+- name: Configurando a rede para gnorar ipv6
+  become: yes
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX='
+    line: GRUB_CMDLINE_LINUX="ipv6.disable=1"
+
+# - name: Atualiza grub
+  # become: yes
+  # shell:
+    # cmd: update-grub
+  # notify: Reiniciando o Computador
+
+# - name: Reiniciando o Computador
+  # become: yes
+  # shell: "sleep 5 && reboot"
+  # async: 1
+  # poll: 0
+
+# - name: Aguardando Reinicializacao
+  # become: false
+  # wait_for:
+    # port: 22
+    # host: 192.168.1.203
+    # search_regex: OpenSSH
+    # delay: 10
+    # timeout: 60
+  # connection: local
 
 - name: Atualizando o Sistema Operacional
-  apt:
-    name: '*'
-    state: latest
+  become: yes
+  shell: 'sudo apt update'
 
 - name: Instalação de Pacotes
+  become: yes
   apt:
     name: '{{ common_packages_debian }}'
     state: latest
 
 - name: Atualizando o timezone
-  ansible.builtin.file:
+  become: yes
+  file:
     src: /usr/share/zoneinfo/America/Sao_Paulo
     dest: /etc/localtime
     owner: root
@@ -21,174 +51,200 @@
 
 # Copiando um template
 - name: Copiando o arquivo de configuracao do VIM
+  become_user: "{{user_name}}"
   template:
     src: .vimrc
     dest: /home/{{user_name}}/.vimrc
     force: yes
-    owner: "{{user_name}}"
-    group: "{{user_name}}"
-    mode: "0644"
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
+    # mode: "0644"
 
 - name: Copiando o arquivo de configuracao do Bashrc
+  become_user: "{{user_name}}"
   template:
     src: .bashrc
     dest: /home/{{user_name}}/.bashrc
     force: yes
-    owner: "{{user_name}}"
-    group: "{{user_name}}"
-    mode: "0644"
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
+    # mode: "0644"
     
 - name: Adicionando Repositorio CopyQ
+  become: yes
   apt_repository:
     repo: ppa:hluk/copyq
 
 - name: Adicionando a Chave de Acesso ao Repositorio AnyDesk
+  become: yes
   apt_key:
     url: https://keys.anydesk.com/repos/DEB-GPG-KEY
     state: present
   notify: Atualizacao de Cache
 
 - name: Adicionando o Repositorio do AnyDesk
+  become: yes
   apt_repository:
     repo: deb [arch=amd64] http://deb.anydesk.com/ all main
     state: present
   notify: Atualizacao de Cache 
 
 - name: Adicionando Chave de Repo do Chrome
+  become: yes
   apt_key:
     url: https://dl.google.com/linux/linux_signing_key.pub
     state: present
 
 - name: Adicionando o Repositório do Chrome
+  become: yes
   apt_repository:
     repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
     state: present
   notify: Atualizacao de Cache
 
 - name: Instalacao do Chrome
+  become: yes
   apt:
     name: google-chrome-stable
     state: present
     update_cache: yes
 
 - name: Instalacao do CopyQ
+  become: yes
   apt:
     name: copyq
     state: present
     update_cache: yes
     
 - name: Instalacao do AnyDesk
+  become: yes
   apt:
     name: anydesk
     state: present
     update_cache: yes
 
 - name: Baixando e instalando aws cli v2
+  become: yes
   unarchive:
     src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     dest: /usr/local/bin
     remote_src: yes
 
 - name: Baixando e instalando appimagelauncher
+  become: yes
   apt:
     deb: https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
 
 - name: Criando um diretório para o PlugVim
+  become_user: "{{user_name}}"
   file:
     path: /home/{{user_name}}/.vim/autoload
     state: directory
-    mode: '0755'
+    # mode: '0755'
 
 - name: Instalando o PlugVim
+  become_user: "{{user_name}}"
   template:
     src: plug.vim 
     dest: /home/{{user_name}}/.vim/autoload/plug.vim
-    owner: "{{user_name}}"
-    group: "{{user_name}}"
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
 
 - name: Adicionando a Chave de Acesso ao Repositorio HELM
+  become: yes
   apt_key:
     url: https://baltocdn.com/helm/signing.asc
     state: present
     
 - name: Adicionando Repositório HELM
-  ansible.builtin.apt_repository:
+  become: yes
+  apt_repository:
     repo: deb https://baltocdn.com/helm/stable/debian/ all main
     state: present
     filename: repo-helm
   notify: Atualizacao de Cache
   
 - name: Instalando HELM 3
+  become: yes
   apt:
     name: helm
 
-#- name: Instalando kubectl
-#  get_url:
-#    url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
-#    dest: /usr/local/bin/kubectl
-#    owner: "{{user_name}}"
-#    group: "{{user_name}}"
-#    mode: '0777'
+# - name: Instalando kubectl
+  # become: yes
+  # get_url:
+    # url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+    # dest: /usr/local/bin/kubectl
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
+    # mode: u=rwx,g=rx,o=rx
 
-- name: Instalando o Lens
-  apt:
-    deb: https://api.k8slens.dev/binaries/Lens-5.3.3-latest.20211214.2.amd64.deb
+# - name: Instalando o Lens
+  # become: yes
+  # apt:
+    # deb: https://api.k8slens.dev/binaries/Lens-5.3.3-latest.20211214.2.amd64.deb
 
 - name: Instalando o MegaSync
   apt:
     deb: https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync-xUbuntu_20.04_amd64.deb
 
 - name: Instalando o Notion via Snap
+  become: yes
   community.general.snap:
     name:
       - notion-snap
 
 - name: Instalando o navegador Vivaldi
+  become: yes
   apt:
     deb: https://downloads.vivaldi.com/stable/vivaldi-stable_5.0.2497.32-1_amd64.deb
 
-- name: Configurando a rede para gnorar ipv6
-  lineinfile:
-    path: /etc/default/grub
-    regexp: '^GRUB_CMDLINE_LINUX='
-    line: GRUB_CMDLINE_LINUX="ipv6.disable=1"
-  notify: Atualiza grub
 
 - name: Preparando ambiente para instalação do Tema Dracula no VIM
-  ansible.builtin.file:
+  become_user: "{{user_name}}"
+  file:
     path: /home/{{user_name}}/.vim/pack/themes/start/dracula
     state: directory
-    mode: '0755' 
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: u=rwx,g=rx,o=rx
     
 - name: Clonando repositorio Dracula
+  become_user: "{{user_name}}"
   git:
     repo: https://github.com/dracula/vim.git
     dest: /home/{{user_name}}/.vim/pack/themes/start/dracula
 
 - name: Instalando o Microsoft Teams
+  become: yes
   apt:
     deb: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.4.00.7556_amd64.deb
 
 - name: Criando diretorio para appimages
-  ansible.builtin.file:
+  become_user: "{{user_name}}"
+  file:
     path: /home/{{user_name}}/Applications
     state: directory
-    mode: '0755' 
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
+    # mode: u=rwx,g=rx,o=rx
 
 - name: Instalando o Todoist
+  become_user: "{{user_name}}"
   get_url:
     url: https://todoist.com/linux_app/appimage
     dest: /home/{{user_name}}/Applications/Todoist-1.0.3.AppImage
-    owner: "{{user_name}}"
-    group: "{{user_name}}"
-    mode: '0777'
+    # owner: "{{user_name}}"
+    # group: "{{user_name}}"
+    # mode: u=rwx,g=rx,o=rx
 
 - name: Clonando repositorio tfenv
+  become_user: "{{user_name}}"
   git:
     repo: https://github.com/tfutils/tfenv.git
     dest: /home/{{user_name}}/.tfenv
 
 - name: Definindo DNS Cloudflare e Google
+  become: yes
   net_system:
     name_servers:
       - 1.1.1.1
