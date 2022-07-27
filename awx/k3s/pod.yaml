@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cesar-pod
+  namespace: awx
+spec:
+  serviceAccountName: default
+  automountServiceAccountToken: false
+  containers:
+    - image: quay.io/ansible/awx-ee:latest
+      name: worker
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      args:
+        - ansible-runner
+        - worker
+        - '--private-data-dir=/runner'
+      volumeMounts:
+        - name: ssh-config
+          mountPath: /home/runner/.ssh/config
+          subPath: default
+        - name: ssh-keys
+          mountPath: /home/runner/.ssh/id_rsa
+          subPath: default
+        - name: ssh-config-etc
+          mountPath: /etc/ssh/ssh_config.d/98-cesar.conf
+          subPath: default
+        
+  volumes:
+    - name: ssh-config
+      configMap:
+        name: ansible-awx-ssh-configs
+        defaultMode: 0400
+    - name: ssh-config-etc
+      configMap:
+        name: ansible-awx-ssh-configs
+        defaultMode: 0400
+    - name: ssh-keys
+      secret:
+        secretName: ansible-awx-ssh-keys
+        defaultMode: 0400
+  securityContext:
+    runAsUser: 1000
