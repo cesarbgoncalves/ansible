@@ -26,7 +26,19 @@ pipeline {
     }
 
     stages {
-        stage('validações') {
+        stage('Validando Path') {
+            steps {
+                script {
+                    sh(script: """
+                        echo PATH before is $PATH
+                        PATH=$PATH:/usr/local/bin
+                        echo PATH after is $PATH
+
+                    """)
+                }
+            }
+        }
+        stage('Ansible Ad-Hok') {
             steps {
                 script {
                     sh(script: """
@@ -38,7 +50,7 @@ pipeline {
                 }
             }
         }
-        stage('ping') {
+        stage('Ansible Plugin') {
             steps {
                 ansiColor('xterm') {
                 ansiblePlaybook(
