@@ -3,4 +3,4 @@
   tasks:
     - name: Ping via playbook
       ansible.builtin.ping:
-        data: crash
+        # data: crash
