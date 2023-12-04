@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        /usr/local/bin/ansible --module-name ping '$TARGET_LIST' \
+                        ansible --module-name ping '$TARGET_LIST' \
                         -i hosts/proxmox.yml \
                         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
                     """)
