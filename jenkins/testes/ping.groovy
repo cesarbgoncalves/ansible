@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        sleep 40
+                        echo "INICIANDO SCRIPTS
                     """)
                 }
             }
