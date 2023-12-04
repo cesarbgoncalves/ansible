@@ -27,7 +27,7 @@ pipeline {
         stage('Gerando Backup') {
             steps {
                 script {
-                    sh sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
+                    sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
                 }
             }
         }
