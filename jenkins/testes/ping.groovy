@@ -14,7 +14,7 @@ pipeline {
         SSH_CREDENTIAL=credentials('ssh-root')
         ANSIBLE_CONFIG="${pwd}/ansible.cfg"
         TARGET_LIST = 'all'
-        // PATH = "${PATH}:/usr/local/bin/ansible"
+        PATH = "${PATH}:/usr/bin/"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
         // user="root"
@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
+                        vim --version
                         cat /etc/issue
                         ls -ltrh /etc/ansible
                         ls -ltrh /opt/java/openjdk/bin
