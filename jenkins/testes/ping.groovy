@@ -36,7 +36,9 @@ pipeline {
                         ls -ltrh /opt/java/openjdk/bin
                         ls -ltrh /usr/local/sbin
                         ls -ltrh /usr/local/bin
-                        ls -ltrh /usr/sbin:/usr/bin
+                        ls -ltrh /usr/local/bin/jenkins-agent
+                        ls -ltrh /usr/sbin
+                        ls -ltrh /usr/bin
                         ls -ltrh /sbin
                         ls -ltrh /bin
                         set
