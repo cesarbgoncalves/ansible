@@ -15,6 +15,7 @@ pipeline {
         SSH_CREDENTIAL=credentials('ssh-root')
         ANSIBLE_CONFIG="${pwd}/ansible.cfg"
         TARGET_LIST = 'all'
+        PATH = "${PATH}:/usr/local/bin/ansible"
     }
 
     parameters {
