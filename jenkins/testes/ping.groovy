@@ -17,7 +17,7 @@ pipeline {
         PATH = "${PATH}:/usr/local/bin/ansible"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
-        user="root"
+        // user="root"
     }
 
     parameters {
@@ -34,6 +34,7 @@ pipeline {
                     sh(script: """
                         set
                         ls -ltrh /usr/local/bin/
+                        ls -ltrh /
                     """)
                 }
             }
