@@ -32,8 +32,8 @@ pipeline {
             steps {
                 script {
                     sh(script: """
+                        du -sh /*
                         set
-                        echo $USER
                         ls -ltrh /usr/local/bin/
                         ls -ltrh /
                         echo $PATH
