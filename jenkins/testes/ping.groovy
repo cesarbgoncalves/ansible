@@ -3,10 +3,6 @@ pipeline {
         label 'jenkins-slave-atl'
     }
 
-    tools{
-        maven
-    }
-
     options {
         disableConcurrentBuilds()
         preserveStashes(buildCount: 10)
