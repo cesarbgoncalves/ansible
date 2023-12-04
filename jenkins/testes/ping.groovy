@@ -37,17 +37,17 @@ pipeline {
                 }
             }
         }
-        stage('Ansible Ad-Hok') {
-            steps {
-                script {
-                    sh(script: """
-                        ansible --module-name ping '$TARGET_LIST' \
-                        -i hosts/proxmox.yml \
-                        --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
-                    """)
-                }
-            }
-        }
+        // stage('Ansible Ad-Hok') {
+        //     steps {
+        //         script {
+        //             sh(script: """
+        //                 ansible --module-name ping '$TARGET_LIST' \
+        //                 -i hosts/proxmox.yml \
+        //                 --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
+        //             """)
+        //         }
+        //     }
+        // }
         stage('Ansible Plugin') {
             steps {
                 ansiColor('xterm') {
