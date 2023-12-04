@@ -20,14 +20,14 @@ pipeline {
     parameters {
         booleanParam(name: 'K3S', defaultValue: false)
         booleanParam(name: 'OPNSENSE', defaultValue: false)
-        booleanParam(name: 'NGINX-MANAGER', defaultValue: false)
-        booleanParam(name: 'MYSQL-PIHOLE', defaultValue: false)
+        booleanParam(name: 'NGINX_MANAGER', defaultValue: false)
+        booleanParam(name: 'MYSQL_PIHOLE', defaultValue: false)
     }
 
     stages {
         stage('ping') {
             when {
-                expression { params.K3S || params.OPNSENSE || params.NGINX-MANAGER || params.MYSQL-PIHOLE }
+                expression { params.K3S || params.OPNSENSE || params.NGINX_MANAGER || params.MYSQL_PIHOLE }
             }
             steps {
                 script {
@@ -46,8 +46,8 @@ pipeline {
 //     def targetList = []
 //     if (params.k3s) { targetList.push("k3s") }
 //     if (params.OPNSENSE) { targetList.push("opnsense") }
-//     if (params.NGINX-MANAGER) { targetList.push("nginx-manager") }
-//     if (params.MYSQL-PIHOLE) { targetList.push("mysql") }
+//     if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
+//     if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
 
 //     def limit = targetList.join(',')
 //     if (limit) limit = /--limit '${limit.toLowerCase()}'/
