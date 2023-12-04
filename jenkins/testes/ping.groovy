@@ -61,7 +61,7 @@ pipeline {
         // }
         stage('Ansible Playbook') {
             steps {
-                sh buildCommand(playbook: "playbooks/prod/delivery.apps/start.fe.yml")
+                sh buildCommand(playbook: "playbooks/testes/ping.yaml")
                 }
             }
     }
@@ -92,9 +92,8 @@ def buildCommand(Map map = [:]) {
 
     return """
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts $tags \
-        -i hosts/gt.${ENV}.yml -i hosts/tb.${ENV}.yml $limit $extra \
+        -i hosts/proxmox.yml $limit $extra \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e 'COLUMN="$col"' \
         -e base_path=\$PWD
     """
 }
