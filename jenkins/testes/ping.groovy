@@ -68,7 +68,7 @@ pipeline {
 
 def getLimit(Map map = [:]) {
     def targetList = []
-    if (params.k3s) { targetList.push("k3s") }
+    if (params.K3S) { targetList.push("k3s") }
     if (params.OPNSENSE) { targetList.push("opnsense") }
     if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
     if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
