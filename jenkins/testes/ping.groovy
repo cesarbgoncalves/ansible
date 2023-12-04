@@ -45,7 +45,6 @@ pipeline {
                         /usr/local/bin/ansible --module-name ping '$TARGET_LIST' \
                         -i hosts/proxmox.yml \
                         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
-
                     """)
                 }
             }
