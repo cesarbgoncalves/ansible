@@ -14,7 +14,7 @@ pipeline {
         SSH_CREDENTIAL=credentials('ssh-root')
         ANSIBLE_CONFIG="${pwd}/ansible.cfg"
         TARGET_LIST = 'all'
-        PATH = "${PATH}:/usr/local/bin/ansible"
+        // PATH = "${PATH}:/usr/local/bin/ansible"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
         // user="root"
@@ -33,8 +33,11 @@ pipeline {
                 script {
                     sh(script: """
                         set
+                        echo $USER
                         ls -ltrh /usr/local/bin/
                         ls -ltrh /
+                        echo $PATH
+
                     """)
                 }
             }
