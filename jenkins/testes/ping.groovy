@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
+                        cat /etc/issue
                         ls -ltrh /etc/ansible
                         ls -ltrh /opt/java/openjdk/bin
                         ls -ltrh /usr/local/sbin
