@@ -26,6 +26,16 @@ pipeline {
     }
 
     stages {
+        stage('validações') {
+            steps {
+                script {
+                    sh(script: """
+                        ls -ltrh
+                        pwd
+                    """)
+                }
+            }
+        }
         stage('ping') {
             steps {
                 ansiColor('xterm') {
