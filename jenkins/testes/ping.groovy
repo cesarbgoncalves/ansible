@@ -33,7 +33,7 @@ pipeline {
                 script {
                     sh(script: """
                         set
-                        ls -ltrh /usr/local/bin/ansible
+                        ls -ltrh /usr/local/bin/
                     """)
                 }
             }
