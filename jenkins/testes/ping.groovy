@@ -13,7 +13,7 @@ pipeline {
         PYTHONUNBUFFERED="1"
         ANSIBLE_COLOR_CHANGED="blue"
         SSH_CREDENTIAL=credentials('ssh-root')
-        ANSIBLE_CONFIG=${pwd}/ansible.cfg
+        ANSIBLE_CONFIG="${pwd}/ansible.cfg"
         TARGET_LIST = 'all'
     }
 
