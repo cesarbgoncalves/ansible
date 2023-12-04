@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        sleep 90
+                        set
                         ls -ltrh /usr/local/bin/ansible
                     """)
                 }
