@@ -16,6 +16,8 @@ pipeline {
         ANSIBLE_CONFIG="${pwd}/ansible.cfg"
         TARGET_LIST = 'all'
         PATH = "${PATH}:/usr/local/bin/ansible"
+        SHELL="/bin/bash"
+        TZ="America/Sao_Paulo"
     }
 
     parameters {
