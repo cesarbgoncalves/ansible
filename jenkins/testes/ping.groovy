@@ -27,12 +27,14 @@ pipeline {
 
     stages {
         stage('ping') {
-            ansiColor('xterm') {
+            steps {
+                ansiColor('xterm') {
                 ansiblePlaybook(
                 playbook: 'playbooks/testes/ping.yaml',
                 inventory: 'hosts/proxmox.yaml',
                 credentialsId: 'ssh-root',
                 colorized: true)
+                }
             }
         }
     }
