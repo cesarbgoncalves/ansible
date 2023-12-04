@@ -32,10 +32,13 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        ls -ltrhR /home
+                        ls -ltrh opt/java/openjdk/bin
+                        ls -ltrh/usr/local/sbin
+                        ls -ltrh/usr/local/bin
+                        ls -ltrh/usr/sbin:/usr/bin
+                        ls -ltrh/sbin
+                        ls -ltrh/bin
                         set
-                        ls -ltrh /usr/local/bin/
-                        ls -ltrh /
                         echo $PATH
 
                     """)
