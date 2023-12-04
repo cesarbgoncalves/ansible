@@ -30,10 +30,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        echo PATH before is $PATH
-                        PATH=$PATH:/usr/local/bin
-                        echo PATH after is $PATH
-
+                        ls -ltrh /usr/local/bin/ansible
                     """)
                 }
             }
@@ -42,7 +39,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        ansible --module-name ping '$TARGET_LIST' \
+                        /usr/local/bin/ansible --module-name ping '$TARGET_LIST' \
                         -i hosts/proxmox.yml \
                         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
 
