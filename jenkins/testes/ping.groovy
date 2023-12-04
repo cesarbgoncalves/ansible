@@ -75,7 +75,7 @@ def getLimit(Map map = [:]) {
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
-
+    println(limit)
     return limit
 }
 
