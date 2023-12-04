@@ -64,7 +64,6 @@ pipeline {
                 sh buildCommand(playbook: "playbooks/prod/delivery.apps/start.fe.yml")
                 }
             }
-        }
     }
 }
 
