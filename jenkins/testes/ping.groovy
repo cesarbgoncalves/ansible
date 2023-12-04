@@ -32,21 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        vim --version
-                        cat /etc/issue
-                        ls -ltrh /etc/ansible
-                        ls -ltrh /opt/java/openjdk/bin
-                        ls -ltrh /usr/local/sbin
-                        ls -ltrh /usr/local/bin
-                        ls -ltrh /usr/local/bin/jenkins-agent
-                        ls -ltrh /usr/local/bin/jenkins-slave
-                        ls -ltrh /usr/sbin
-                        ls -ltrh /usr/bin
-                        ls -ltrh /sbin
-                        ls -ltrh /bin
-                        set
-                        echo $PATH
-
+                        sleep 40
                     """)
                 }
             }
