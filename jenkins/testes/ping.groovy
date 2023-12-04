@@ -17,7 +17,6 @@ pipeline {
         PATH = "${PATH}:/usr/bin/"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
-        // user="root"
     }
 
     parameters {
@@ -82,15 +81,15 @@ def getLimit(Map map = [:]) {
 
 def buildCommand(Map map = [:]) {
     def callback = map.useCallback ? "ANSIBLE_STDOUT_CALLBACK=diy" : ""
-    def tags = map.tags ? map.tags.collect{ "--tags $it" }.join(" ") : ""
-    def extra = map.extra ? map.extra.collect{entry -> "--extra-vars '${entry.key}=${entry.value}'"}.join(" ") : ""
+    // def tags = map.tags ? map.tags.collect{ "--tags $it" }.join(" ") : ""
+    // def extra = map.extra ? map.extra.collect{entry -> "--extra-vars '${entry.key}=${entry.value}'"}.join(" ") : ""
     def verbose = (map.verbose != null ? map.verbose : true) ? "--verbose" : ""
     def list_hosts = (map.list_hosts != null ? map.list_hosts : false) ? "--list-hosts" : ""
     def limit = getLimit(map)
 
     return """
-        $callback ansible-playbook $verbose ${map.playbook} $list_hosts $tags \
-        -i hosts/proxmox.yaml $limit $extra \
+        $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
+        -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$PWD
     """
