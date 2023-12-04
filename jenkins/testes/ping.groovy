@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        du -sh /*
+                        ls -ltrhR /home
                         set
                         ls -ltrh /usr/local/bin/
                         ls -ltrh /
