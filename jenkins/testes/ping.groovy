@@ -90,7 +90,7 @@ def buildCommand(Map map = [:]) {
 
     return """
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts $tags \
-        -i hosts/proxmox.yml $limit $extra \
+        -i hosts/proxmox.yaml $limit $extra \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$PWD
     """
