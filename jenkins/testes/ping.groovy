@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     sh(script: """
-                        echo "INICIANDO SCRIPTS
+                        echo "INICIANDO SCRIPTS"
                     """)
                 }
             }
