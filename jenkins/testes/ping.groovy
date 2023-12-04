@@ -17,6 +17,7 @@ pipeline {
         PATH = "${PATH}:/usr/local/bin/ansible"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
+        user="root"
     }
 
     parameters {
