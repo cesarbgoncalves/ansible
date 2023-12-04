@@ -3,6 +3,10 @@ pipeline {
         label 'jenkins-slave-atl'
     }
 
+    tools{
+        maven
+    }
+
     options {
         disableConcurrentBuilds()
         preserveStashes(buildCount: 10)
@@ -27,17 +31,24 @@ pipeline {
 
     stages {
         stage('ping') {
-            when {
-                expression { params.K3S || params.OPNSENSE || params.NGINX_MANAGER || params.MYSQL_PIHOLE }
-            }
-            steps {
-                script {
-                    sh(script: """
-                        ansible --module-name ping '$TARGET_LIST' \
-                        -i hosts/proxmox.yml \
-                        --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
-                    """)
-                }
+            // when {
+            //     expression { params.K3S || params.OPNSENSE || params.NGINX_MANAGER || params.MYSQL_PIHOLE }
+            // }
+            // steps {
+            //     script {
+            //         sh(script: """
+            //             ansible --module-name ping '$TARGET_LIST' \
+            //             -i hosts/proxmox.yml \
+            //             --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL
+            //         """)
+            //     }
+            // }
+            ansiColor('xterm') {
+                ansiblePlaybook(
+                playbook: 'playbooks/testes/ping.yaml',
+                inventory: 'hosts/proxmox.yaml',
+                credentialsId: 'ssh-root',
+                colorized: true)
             }
         }
     }
