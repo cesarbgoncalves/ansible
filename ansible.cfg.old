@@ -11,8 +11,6 @@
 # documentation: https://docs.ansible.com/ansible/latest/reference_appendices/config.html.
 
 [defaults]
-interpreter_python=auto_silent
-# interpreter_python = /usr/local/bin/python
 #inventory       = /etc/ansible/hosts
 library         = modules:~/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
 #module_utils    = ~/.ansible/plugins/module_utils:/usr/share/ansible/plugins/module_utils
@@ -89,13 +87,13 @@ stdout_callback = debug
 #
 # Enable callback plugins, they can output to stdout but cannot be 'stdout' type.
 #callback_enabled = timer, mail
-# callback_whitelist = timer, profile_tasks, profile_roles, community.general.slack, community.general.log_plays
-# callback_whitelist = timer, profile_tasks, community.general.log_plays
-# callback_whitelist = timer, profile_tasks
-callbacks_enabled = timer, profile_tasks
+; callback_whitelist = timer, profile_tasks, profile_roles, community.general.slack, community.general.log_plays
+callback_enabled = timer, profile_tasks, community.general.log_plays
 
 show_custom_stats = yes
 ; show_per_host_start = yes
+
+
 
 # Determine whether includes in tasks and handlers are "static" by
 # default. As of 2.0, includes are dynamic by default. Setting these
@@ -141,7 +139,7 @@ show_custom_stats = yes
 # If set, always use this private key file for authentication, same as
 # if passing --private-key to ansible or ansible-playbook
 #
-#private_key_file = ~/.ssh/id_rsa
+#private_key_file = /path/to/file
 
 # If set, configures the path to the Vault password file as an alternative to
 # specifying --vault-password-file on the command line. This can also be
@@ -211,7 +209,7 @@ display_skipped_hosts = False
 #action_plugins     = /usr/share/ansible/plugins/action
 #become_plugins     = /usr/share/ansible/plugins/become
 #cache_plugins      = /usr/share/ansible/plugins/cache
-callback_plugins   = callback_plugins:/usr/share/ansible/plugins/callback
+#callback_plugins   = /usr/share/ansible/plugins/callback
 #connection_plugins = /usr/share/ansible/plugins/connection
 #lookup_plugins     = /usr/share/ansible/plugins/lookup
 #inventory_plugins  = /usr/share/ansible/plugins/inventory
@@ -330,12 +328,13 @@ nocows = 1
 #allow_unsafe_lookups = False
 
 # set default errors for all plays
-#any_errors_fatal = False
+any_errors_fatal = False
 
+ansible_network_os = vyos
 
 [inventory]
 # List of enabled inventory plugins and the order in which they are used.
-#enable_plugins = host_list, script, auto, yaml, ini, toml
+enable_plugins = yaml, host_list, script, auto, ini, toml
 
 # Ignore these extensions when parsing a directory as inventory source
 #ignore_extensions = .pyc, .pyo, .swp, .bak, ~, .rpm, .md, .txt, ~, .orig, .ini, .cfg, .retry
@@ -365,7 +364,6 @@ nocows = 1
 # keys encountered. Increases performance on new host additions. Setting works independently of the
 # host key checking setting above.
 #record_host_keys=False
-record_host_keys = False
 
 # by default, Ansible requests a pseudo-terminal for commands executed under sudo. Uncomment this
 # line to disable this behaviour.
@@ -390,7 +388,6 @@ record_host_keys = False
 # Leaving off ControlPersist will result in poor performance, so use
 # paramiko on older platforms rather than removing it, -C controls compression use
 #ssh_args = -C -o ControlMaster=auto -o ControlPersist=60s
-ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null
 
 # The base directory for the ControlPath sockets.
 # This is the "%(directory)s" in the control_path option

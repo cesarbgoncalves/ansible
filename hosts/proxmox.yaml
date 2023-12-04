@@ -1,0 +1,21 @@
+%YAML 1.1
+---
+all:
+  children:
+    vm:
+      hosts: &vm
+        k3s:
+          ansible_user: root
+          ansible_host: 192.168.1.101
+        opnsense:
+          discovered_interpreter_python: /usr/local/bin/python3.9
+          ansible_user: root
+          ansible_host: 192.168.1.1
+    container:
+      hosts: &container
+        nginx-manager:
+          ansible_user: root
+          ansible_host: 192.168.1.10
+        mysql:
+          ansible_user: root
+          ansible_host: 192.168.1.6

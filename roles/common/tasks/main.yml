@@ -70,10 +70,10 @@
     # group: "{{user_name}}"
     # mode: "0644"
     
-- name: Adicionando Repositorio CopyQ
-  become: yes
-  apt_repository:
-    repo: ppa:hluk/copyq
+# - name: Adicionando Repositorio CopyQ
+#   become: yes
+#   apt_repository:
+#     repo: ppa:hluk/copyq
 
 - name: Adicionando a Chave de Acesso ao Repositorio AnyDesk
   become: yes
@@ -109,12 +109,12 @@
     state: present
     update_cache: yes
 
-- name: Instalacao do CopyQ
-  become: yes
-  apt:
-    name: copyq
-    state: present
-    update_cache: yes
+# - name: Instalacao do CopyQ
+#   become: yes
+#   apt:
+#     name: copyq
+#     state: present
+#     update_cache: yes
     
 - name: Instalacao do AnyDesk
   become: yes
@@ -169,29 +169,29 @@
   apt:
     name: helm
 
-# - name: Instalando kubectl
-  # become: yes
-  # get_url:
-    # url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
-    # dest: /usr/local/bin/kubectl
-    # owner: "{{user_name}}"
-    # group: "{{user_name}}"
-    # mode: u=rwx,g=rx,o=rx
-
-# - name: Instalando o Lens
-  # become: yes
-  # apt:
-    # deb: https://api.k8slens.dev/binaries/Lens-5.3.3-latest.20211214.2.amd64.deb
-
-- name: Instalando o MegaSync
-  apt:
-    deb: https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync-xUbuntu_20.04_amd64.deb
-
-- name: Instalando o Notion via Snap
+- name: Instalando kubectl
   become: yes
-  community.general.snap:
-    name:
-      - notion-snap
+  get_url:
+    url: https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: u=rwx,g=rx,o=rx
+
+- name: Instalando o Lens
+  become: yes
+  apt:
+    deb: https://api.k8slens.dev/binaries/Lens-6.0.2-latest.20220908.1.amd64.deb
+
+# - name: Instalando o MegaSync
+#   apt:
+#     deb: https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync-xUbuntu_20.04_amd64.deb
+
+# - name: Instalando o Notion via Snap
+#   become: yes
+#   community.general.snap:
+#     name:
+#       - notion-snap
 
 - name: Instalando o navegador Vivaldi
   become: yes
