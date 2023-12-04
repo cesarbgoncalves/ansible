@@ -86,8 +86,6 @@ def buildCommand(Map map = [:]) {
     def extra = map.extra ? map.extra.collect{entry -> "--extra-vars '${entry.key}=${entry.value}'"}.join(" ") : ""
     def verbose = (map.verbose != null ? map.verbose : true) ? "--verbose" : ""
     def list_hosts = (map.list_hosts != null ? map.list_hosts : false) ? "--list-hosts" : ""
-
-    col = COLUNA.split(',').first().replaceAll(/(\w+)(\d+)/,/$1 $2/).toUpperCase()
     def limit = getLimit(map)
 
     return """
