@@ -6,7 +6,6 @@ pipeline {
     options {
         disableConcurrentBuilds()
         preserveStashes(buildCount: 10)
-        ansiColor('xterm')
     }
 
     environment {
