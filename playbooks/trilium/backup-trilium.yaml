@@ -1,10 +1,16 @@
   - name:
-    hosts: k3s
+    hosts: all
     become: true
+    gather_facts: true
     tasks:
     - name: Compactando Arquivo
       community.general.archive:
         path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db
-        dest: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db.tar.gz
+        dest: /home/cesar/k8s_volumes/trilium_home/backup/backup.db.{{ansible_date_time.date}}.tar.gz
         format: gz
         force_archive: true
+      register: archive_result
+
+    - name: Armazenar o nome do arquivo compactado em uma variável
+      set_fact:
+        compressed_file_name: "{{ archive_result.dest }}"
