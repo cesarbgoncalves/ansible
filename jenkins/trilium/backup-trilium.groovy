@@ -44,9 +44,15 @@ pipeline {
             }
             steps {
                 script {
-                    withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1') {
-                        sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml")
-                    }
+                    withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'secret')]) {
+                        script {
+                            def creds = readJSON text: secret
+                            env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
+                            env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                            env.AWS_REGION = 'sa-east-1'
+                            sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml -e $AWS_ACCESS_KEY_ID \
+                            -e $AWS_SECRET_ACCESS_KEY -e $AWS_REGION")
+                        }
                 }
                 
             }
