@@ -25,20 +25,28 @@ pipeline {
     stages {
         
         stage('Gerando Backup') {
+            when {
+                expression { params.Gerar_Backup }
+            }
             steps {
                 script {
-                    sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
+                        sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
                 }
             }
         }
         stage('Enviando para a AWS') {
+            when {
+                expression { params.Enviar_AWS }
+            }
             steps {
-                withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1') {
-                    sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
+                script {
+                    withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1') {
+                        sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
+                    }
                 }
                 
-                }
             }
+        }
     }
 }
 
