@@ -18,9 +18,9 @@ pipeline {
     }
 
     parameters {
-        booleanParam(name: 'Gerar_Backup', defaultValue: false)
-        booleanParam(name: 'Enviar_AWS', defaultValue: false)
-        booleanParam(name: 'K3S', defaultValue: false)
+        booleanParam(name: 'Gerar_Backup', defaultValue: true)
+        booleanParam(name: 'Enviar_AWS', defaultValue: true)
+        booleanParam(name: 'K3S', defaultValue: true)
         booleanParam(name: 'OPNSENSE', defaultValue: false)
         booleanParam(name: 'NGINX_MANAGER', defaultValue: false)
         booleanParam(name: 'MYSQL_PIHOLE', defaultValue: false)
