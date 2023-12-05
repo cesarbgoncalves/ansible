@@ -20,6 +20,10 @@ pipeline {
     parameters {
         booleanParam(name: 'Gerar_Backup', defaultValue: false)
         booleanParam(name: 'Enviar_AWS', defaultValue: false)
+        booleanParam(name: 'K3S', defaultValue: false)
+        booleanParam(name: 'OPNSENSE', defaultValue: false)
+        booleanParam(name: 'NGINX_MANAGER', defaultValue: false)
+        booleanParam(name: 'MYSQL_PIHOLE', defaultValue: false)
     }
 
     stages {
@@ -52,8 +56,10 @@ pipeline {
 
 def getLimit(Map map = [:]) {
     def targetList = []
-    if (params.Gerar_Backup) { targetList.push("k3s") }
-    if (params.Enviar_AWS) { targetList.push("opnsense") }
+    if (params.K3S) { targetList.push("k3s") }
+    if (params.OPNSENSE) { targetList.push("opnsense") }
+    if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
+    if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
