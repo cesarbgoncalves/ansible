@@ -1,5 +1,5 @@
 - name: Backup do Trilium
-  hosts: all
+  hosts: k3s
   become: true
   gather_facts: true
   roles:
