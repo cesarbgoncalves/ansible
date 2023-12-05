@@ -1,8 +1,10 @@
-- hosts: all
-  become: true
-  name: Fazendo Backup do document.db do Trilium
-  community.general.archive:
-    path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db
-    dest: me/cesar/k8s_volumes/trilium_home/backup/backup-now.db.tar.gz
-    format: gz
-    force_archive: true
+  - name:
+    hosts: k3s
+    become: true
+    tasks:
+    - name: Compactando Arquivo
+      community.general.archive:
+        path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db
+        dest: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db.tar.gz
+        format: gz
+        force_archive: true
