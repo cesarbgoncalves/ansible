@@ -5,3 +5,5 @@
     acl: private
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
+    
+- debug: msg={{listresult.s3_keys}}
