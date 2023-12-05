@@ -1,3 +1,4 @@
+# roles
 - name: Compactando Arquivo
   community.general.archive:
     path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db

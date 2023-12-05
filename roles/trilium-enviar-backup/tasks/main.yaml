@@ -1,0 +1,7 @@
+- name: Enviar arquivo compactado para o S3
+  community.aws.s3_sync:
+    bucket: cesarbgoncalves/backup/trilium
+    file_root: /home/cesar/k8s_volumes/trilium_home/backup/backup.db.{{ansible_date_time.date}}.tar.gz
+    acl: private
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"

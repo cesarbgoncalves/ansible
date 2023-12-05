@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1') {
-                        sh buildCommand(playbook: "playbooks/trilium/backup-trilium.yaml")
+                        sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml")
                     }
                 }
                 

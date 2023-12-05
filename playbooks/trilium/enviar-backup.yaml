@@ -1,0 +1,7 @@
+# Playbook
+- name: Enviar o Backup do Trilium para a AWS
+  hosts: k3s
+  become: true
+  gather_facts: true
+  roles:
+    - role: trilium-enviar-backup
