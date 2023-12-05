@@ -1,8 +1,11 @@
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
+    profile: cesar
     bucket: cesarbgoncalves
     object: /backup/trilium/backup.db.{{ansible_date_time.date}}.tar.gz
     src: /home/cesar/k8s_volumes/trilium_home/backup/backup.db.{{ansible_date_time.date}}.tar.gz
     mode: put
+  register: putresult
 
-- debug: msg={{listresult.s3_keys}}
+- debug: msg="{{ putresult.msg }} e a URL do objeto é {{putresult.url}}"
+  when: putresult.changed

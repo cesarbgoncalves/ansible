@@ -50,8 +50,7 @@ pipeline {
                             env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
                             env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
                             env.AWS_REGION = 'sa-east-1'
-                            sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml -e $AWS_ACCESS_KEY_ID \
-                            -e $AWS_SECRET_ACCESS_KEY -e $AWS_REGION")
+                            sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml")
                         }
                     }
                 
