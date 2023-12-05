@@ -1,6 +1,6 @@
 # Playbook
 - name: Backup do Trilium
-  hosts: k3s
+  hosts: all
   become: true
   gather_facts: true
   roles:
