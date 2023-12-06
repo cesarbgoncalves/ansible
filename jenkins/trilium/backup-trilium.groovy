@@ -54,10 +54,10 @@ pipeline {
     }
     post {
         always {
-            echo 'I will always say Hello again!'
+            echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
             
             emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                recipientProviders: 'cesarbgoncalves@gmail.com', [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
