@@ -27,6 +27,13 @@ pipeline {
     }
 
     stages {
+        stage('Validando os repositórios') {
+            steps {
+                script {
+                    sh pwd ; ls -ltrhR
+                }
+            }
+        }
         
         stage('Gerando Backup') {
             when {
