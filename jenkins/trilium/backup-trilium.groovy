@@ -33,7 +33,7 @@ pipeline {
                     sh """
                     pwd
                     ls -ltrhR /home/jenkins/workspace/Backup_Trilium
-                    sleep 120
+                    sleep 60
                     """
                 }
             }
