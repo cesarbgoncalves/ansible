@@ -32,7 +32,7 @@ pipeline {
                 script {
                     sh """
                     pwd
-                    ls -ltrh /home/jenkins/workspace/Backup_Trilium
+                    ls -ltrhR /home/jenkins/workspace/Backup_Trilium
                     """
                 }
             }
