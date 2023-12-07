@@ -31,6 +31,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                    sleep 300
                     source trilium-py/venv/bin/activate
                     trilium-py/venv/bin/python -m pip3 install -r trilium-py/requirements.txt
                     trilium-py/venv/bin/python trilium-py/backup.py
