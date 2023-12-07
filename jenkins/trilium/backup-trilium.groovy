@@ -32,6 +32,8 @@ pipeline {
                 script {
                     sh """
                     source trilium-py/venv/bin/activate
+                    ls -ltrh
+                    pwd
                     trilium-py/venv/bin/python -m pip3 install -r ./trilium-py/requirements.txt
                     trilium-py/venv/bin/python ./trilium-py/backup.py
                     """
