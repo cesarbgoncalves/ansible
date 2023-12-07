@@ -66,10 +66,15 @@ pipeline {
     post {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
+            emailext(
+                subject: "Job ${env.JOB_NAME} -> ${currentBuild.currentResult}",
+                to: "cesarbgoncalves@gmail.com",
+                body: """<p>${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p>Console output (last 250 lines):<hr><pre>${BUILD_LOG}</pre></p>"""
             
-            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n <pre>${env.BUILD_LOG_EXCERPT}</pre> \n More info at ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            // emailext body: "<pre>${BUILD_LOG, maxLines=9999, escapeHtml=false}</pre>",
+            //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            //     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
 }
