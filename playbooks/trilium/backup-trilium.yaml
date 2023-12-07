@@ -3,5 +3,7 @@
   hosts: all
   become: true
   gather_facts: true
+  vars:
+    ANSIBLE_CONFIG: ./ansible.cfg
   roles:
-    - role: trilium-compactar-backup
+    - role: trilium-backup

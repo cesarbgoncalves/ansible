@@ -31,9 +31,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                    pwd
-                    ls -ltrhR /home/jenkins/workspace/Backup_Trilium
-                    sleep 60
+                    source trilium-py/venv/bin/activate
+                    trilium-py/venv/bin/python -m pip3 install -r trilium-py/requirements.txt
+                    trilium-py/venv/bin/python trilium-py/backup.py
                     """
                 }
             }
@@ -66,15 +66,10 @@ pipeline {
     post {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
-            emailext(
-                subject: "Job ${env.JOB_NAME} -> ${currentBuild.currentResult}",
-                to: "cesarbgoncalves@gmail.com",
-                body: """<p>${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                <p>Console output (last 250 lines):<hr><pre>${BUILD_LOG}</pre></p>"""
-            )
-            // emailext body: "<pre>${BUILD_LOG, maxLines=9999, escapeHtml=false}</pre>",
-            //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            //     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            
+            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
 }
