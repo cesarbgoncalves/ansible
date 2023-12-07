@@ -35,8 +35,8 @@ pipeline {
                     source /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/activate
                     ls -ltrh
                     pwd
-                    home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python -m pip3 install -r ./trilium-py/requirements.txt
-                    home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python home/jenkins/workspace/Backup_Trilium/trilium-py/backup.py
+                    /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python -m pip3 install -r ./trilium-py/requirements.txt
+                    /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python home/jenkins/workspace/Backup_Trilium/trilium-py/backup.py
                     """
                 }
             }
