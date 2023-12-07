@@ -33,6 +33,7 @@ pipeline {
                     sh """
                     pwd
                     ls -ltrhR /home/jenkins/workspace/Backup_Trilium
+                    sleep 120
                     """
                 }
             }
@@ -66,7 +67,7 @@ pipeline {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
             
-            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n <pre>${BUILD_LOG_EXCERPT, start='Regex-for-start', end='Regex-for-end'}</pre> \n More info at: ${env.BUILD_URL}",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
