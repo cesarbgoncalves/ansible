@@ -71,7 +71,7 @@ pipeline {
                 to: "cesarbgoncalves@gmail.com",
                 body: """<p>${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
                 <p>Console output (last 250 lines):<hr><pre>${BUILD_LOG}</pre></p>"""
-            
+            )
             // emailext body: "<pre>${BUILD_LOG, maxLines=9999, escapeHtml=false}</pre>",
             //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             //     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
