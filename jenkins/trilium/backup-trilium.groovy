@@ -31,6 +31,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                    set
                     source trilium-py/venv/bin/activate
                     ls -ltrh
                     pwd
