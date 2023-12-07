@@ -1,0 +1,11 @@
+- name: Enviar arquivo compactado para o S3
+  amazon.aws.aws_s3:
+    profile: cesar
+    bucket: cesarbgoncalves
+    object: /backup/pihole/pihole-bkp.{{ansible_date_time.date}}.tar.gz
+    src: /tmp/pihole-bkp.{{ansible_date_time.date}}.tar.gz
+    mode: put
+  register: putresult
+
+- debug: msg="{{ putresult.msg }} e a URL do objeto é {{putresult.url}}"
+  when: putresult.changed

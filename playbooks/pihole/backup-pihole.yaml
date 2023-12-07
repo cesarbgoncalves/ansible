@@ -1,0 +1,8 @@
+# Playbook
+- name: Backup do Pi-Hole
+  hosts: 
+  become: true
+  gather_facts: true
+  roles:
+    - role: pihole-backup
+

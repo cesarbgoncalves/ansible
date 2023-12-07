@@ -1,0 +1,6 @@
+# roles
+- name: Gerando backup Pihole
+  community.general.archiveansible.builtin.shell:
+    pihole -a -t /tmp/pihole-bkp.{{ansible_date_time.date}}.tar.gz
+  args:
+    executable: /bin/bash

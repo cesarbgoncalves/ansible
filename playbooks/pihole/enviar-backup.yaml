@@ -1,0 +1,9 @@
+# Playbook
+- name: Enviar o Backup do Pi-Hole para a AWS
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    ANSIBLE_CONFIG: ./ansible.cfg
+  roles:
+    - role: pihole-enviar-backup
