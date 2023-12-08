@@ -32,16 +32,28 @@ pipeline {
             steps {
                 script {
                     sh """
-                    set
-                    source ${WORKSPACE}/trilium-py/venv/bin/activate
-                    pwd
-                    whereis python
-                    python -m pip3 install -r trilium-py/requirements.txt
-                    python trilium-py/backup.py
+                    python -m venv venv
+                    source ./venv/bin/activate
+                    pip install -r ./trilium-py/requirements.txt
+                    python ./trilium-py/backup
                     """
                 }
             }
-        }
+        
+        // stage('Validando os repositórios') {
+        //     steps {
+        //         script {
+        //             sh """
+        //             set
+        //             source ${WORKSPACE}/trilium-py/venv/bin/activate
+        //             pwd
+        //             whereis python
+        //             python -m pip3 install -r trilium-py/requirements.txt
+        //             python trilium-py/backup.py
+        //             """
+        //         }
+        //     }
+        // }
         
         stage('Gerando Backup') {
             when {
