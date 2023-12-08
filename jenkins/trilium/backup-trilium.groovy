@@ -15,7 +15,7 @@ pipeline {
         ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
-        PATH="${PATH}:${WORKSPACE}/trilium-py/venv/bin"
+        // PATH="${PATH}:${WORKSPACE}/trilium-py/venv/bin"
     }
 
     parameters {
@@ -32,11 +32,10 @@ pipeline {
             steps {
                 script {
                     sh """
-                    sleep 999
-                    python -m venv venv
+                    python3 -m venv venv
                     source ./venv/bin/activate
                     pip install -r ./trilium-py/requirements.txt
-                    python ./trilium-py/backup
+                    python3 ./trilium-py/backup
                     """
                 }
             }
