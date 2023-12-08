@@ -12,9 +12,10 @@ pipeline {
         PYTHONUNBUFFERED="1"
         ANSIBLE_COLOR_CHANGED="blue"
         SSH_CREDENTIAL=credentials('ssh-root')
-        ANSIBLE_CONFIG="${pwd}/ansible.cfg"
+        ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
+        PATH="${PATH}:${WORKSPACE}/trilium-py/venv/bin"
     }
 
     parameters {
@@ -32,11 +33,11 @@ pipeline {
                 script {
                     sh """
                     set
-                    source /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/activate
-                    ls -ltrh
+                    source ${WORKSPACE}/trilium-py/venv/bin/activate
                     pwd
-                    /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python -m pip3 install -r ./trilium-py/requirements.txt
-                    /home/jenkins/workspace/Backup_Trilium/trilium-py/venv/bin/python home/jenkins/workspace/Backup_Trilium/trilium-py/backup.py
+                    whereis python
+                    python -m pip3 install -r trilium-py/requirements.txt
+                    python trilium-py/backup.py
                     """
                 }
             }
