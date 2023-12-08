@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                    sleep 999
                     python -m venv venv
                     source ./venv/bin/activate
                     pip install -r ./trilium-py/requirements.txt
