@@ -13,6 +13,6 @@ requests==2.31.0
 six==1.16.0
 soupsieve==2.5
 svgwrite==1.4.3
-trilium-py==0.8.5
+# trilium-py==0.8.5
 urllib3==2.1.0
 wavedrom==2.0.3.post3
