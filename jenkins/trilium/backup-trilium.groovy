@@ -39,7 +39,7 @@ pipeline {
                     """
                 }
             }
-        
+        }
         // stage('Validando os repositórios') {
         //     steps {
         //         script {
