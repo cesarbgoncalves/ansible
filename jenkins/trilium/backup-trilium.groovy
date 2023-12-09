@@ -12,25 +12,38 @@ pipeline {
         PYTHONUNBUFFERED="1"
         ANSIBLE_COLOR_CHANGED="blue"
         SSH_CREDENTIAL=credentials('ssh-root')
-        ANSIBLE_CONFIG="${pwd}/ansible.cfg"
+        ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
+        // PATH="${PATH}:${WORKSPACE}/trilium-py/venv/bin"
     }
 
     parameters {
         booleanParam(name: 'Gerar_Backup', defaultValue: true)
+        booleanParam(name: 'Compactar', defaultValue: true)
         booleanParam(name: 'Enviar_AWS', defaultValue: true)
         booleanParam(name: 'K3S', defaultValue: true)
-        booleanParam(name: 'OPNSENSE', defaultValue: false)
-        booleanParam(name: 'NGINX_MANAGER', defaultValue: false)
-        booleanParam(name: 'MYSQL_PIHOLE', defaultValue: false)
     }
 
     stages {
-        
-        stage('Gerando Backup') {
+        stage('Criando backup Trilium') {
             when {
                 expression { params.Gerar_Backup }
+            }
+            steps {
+                script {
+                    sh """
+                    python3 -m venv venv
+                    source ./venv/bin/activate
+                    pip install trilium-py
+                    python3 scripts-trilium/backup.py
+                    """
+                }
+            }
+        }
+        stage('Compactando Arquivo') {
+            when {
+                expression { params.Compactar }
             }
             steps {
                 script {
@@ -56,9 +69,9 @@ pipeline {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
             
-            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}, tô: 'cesarbgoncalves@gmail.com' "
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
 }
@@ -66,9 +79,9 @@ pipeline {
 def getLimit(Map map = [:]) {
     def targetList = []
     if (params.K3S) { targetList.push("k3s") }
-    if (params.OPNSENSE) { targetList.push("opnsense") }
-    if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
-    if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
+    // if (params.OPNSENSE) { targetList.push("opnsense") }
+    // if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
+    // if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/

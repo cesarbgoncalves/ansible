@@ -2,8 +2,8 @@
   amazon.aws.aws_s3:
     profile: cesar
     bucket: cesarbgoncalves
-    object: /backup/trilium/backup.db.{{ansible_date_time.date}}.tar.gz
-    src: /home/cesar/k8s_volumes/trilium_home/backup/backup.db.{{ansible_date_time.date}}.tar.gz
+    object: /backup/trilium/backup-{{ansible_date_time.date}}.tar.gz
+    src: /home/cesar/k8s_volumes/trilium_home/backup/backup-{{ansible_date_time.date}}.tar.gz
     mode: put
   register: putresult
 
