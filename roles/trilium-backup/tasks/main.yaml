@@ -1,22 +1,4 @@
 # roles
-- name: Install virtualenv via pip
-  pip:
-    name: virtualenv
-    executable: pip3
-
-- name: Instalando Requisitos
-  ansible.builtin.pip:
-    chdir: /home/cebarbosa/git/pessoal/ansible/
-    requirements: /trilium-py/requirements.txt
-    virtualenv: trilium-py/venv
-  tags: [ pip ]
-
-- name: Run a script using an executable in a system path
-  ansible.builtin.script: /trilium-py/backup.py
-  args:
-    executable: /trilium-py/bin/python3
-  tags: [ pip ]
-
 - name: Compactando Arquivo
   community.general.archive:
     path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db
