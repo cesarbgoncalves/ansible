@@ -36,9 +36,6 @@ pipeline {
                     source ./venv/bin/activate
                     pip install trilium-py
                     which python
-                    echo $PATH
-                    echo ''
-                    echo $PYTHONPATH
                     python3 scripts-trilium/backup.py
                     """
                 }
