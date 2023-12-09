@@ -19,16 +19,13 @@ pipeline {
     }
 
     parameters {
-        booleanParam(name: 'Gerar_Backup', defaultValue: false)
-        booleanParam(name: 'Enviar_AWS', defaultValue: false)
-        booleanParam(name: 'K3S', defaultValue: false)
-        booleanParam(name: 'OPNSENSE', defaultValue: false)
-        booleanParam(name: 'NGINX_MANAGER', defaultValue: false)
-        booleanParam(name: 'MYSQL_PIHOLE', defaultValue: false)
+        booleanParam(name: 'Gerar_Backup', defaultValue: true)
+        booleanParam(name: 'Enviar_AWS', defaultValue: true)
+        booleanParam(name: 'K3S', defaultValue: true)
     }
 
     stages {
-        stage('Validando os repositórios') {
+        stage('Criando backup Trilium') {
             steps {
                 script {
                     sh """
@@ -40,22 +37,7 @@ pipeline {
                 }
             }
         }
-        // stage('Validando os repositórios') {
-        //     steps {
-        //         script {
-        //             sh """
-        //             set
-        //             source ${WORKSPACE}/trilium-py/venv/bin/activate
-        //             pwd
-        //             whereis python
-        //             python -m pip3 install -r trilium-py/requirements.txt
-        //             python trilium-py/backup.py
-        //             """
-        //         }
-        //     }
-        // }
-        
-        stage('Gerando Backup') {
+        stage('Compactando Arquivo') {
             when {
                 expression { params.Gerar_Backup }
             }
@@ -93,9 +75,9 @@ pipeline {
 def getLimit(Map map = [:]) {
     def targetList = []
     if (params.K3S) { targetList.push("k3s") }
-    if (params.OPNSENSE) { targetList.push("opnsense") }
-    if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
-    if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
+    // if (params.OPNSENSE) { targetList.push("opnsense") }
+    // if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
+    // if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/

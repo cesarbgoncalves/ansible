@@ -1,8 +1,8 @@
 # roles
 - name: Compactando Arquivo
   community.general.archive:
-    path: /home/cesar/k8s_volumes/trilium_home/backup/backup-now.db
-    dest: /home/cesar/k8s_volumes/trilium_home/backup/backup.db.{{ansible_date_time.date}}.tar.gz
+    path: /home/cesar/k8s_volumes/trilium_home/backup/backup-{{ansible_date_time.date}}.db
+    dest: /home/cesar/k8s_volumes/trilium_home/backup/backup-{{ansible_date_time.date}}.tar.gz
     format: gz
     force_archive: true
     tags: [ compactando ]
