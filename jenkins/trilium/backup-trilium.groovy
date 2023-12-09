@@ -34,10 +34,10 @@ pipeline {
                     sh """
                     python3 -m venv venv
                     source ./venv/bin/activate
-                    apt-get install -y libmagic-dev
                     pip install trilium-py
                     which python
-                    python3 scripts-trilium/backup.py
+                    set
+                    // python3 scripts-trilium/backup.py
                     """
                 }
             }
