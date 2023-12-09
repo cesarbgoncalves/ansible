@@ -20,12 +20,16 @@ pipeline {
 
     parameters {
         booleanParam(name: 'Gerar_Backup', defaultValue: true)
+        booleanParam(name: 'Compactar', defaultValue: true)
         booleanParam(name: 'Enviar_AWS', defaultValue: true)
         booleanParam(name: 'K3S', defaultValue: true)
     }
 
     stages {
         stage('Criando backup Trilium') {
+            when {
+                expression { params.Gerar_Backup }
+            }
             steps {
                 script {
                     sh """
@@ -39,7 +43,7 @@ pipeline {
         }
         stage('Compactando Arquivo') {
             when {
-                expression { params.Gerar_Backup }
+                expression { params.Compactar }
             }
             steps {
                 script {
