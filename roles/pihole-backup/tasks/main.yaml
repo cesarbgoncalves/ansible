@@ -1,6 +1,12 @@
 # roles
 - name: Gerando backup Pihole
-  community.general.archiveansible.builtin.shell:
-    pihole -a -t /tmp/pihole-bkp.{{ansible_date_time.date}}.tar.gz
-  args:
-    executable: /bin/bash
+  shell:
+    cmd: |
+      echo 'Change to mapped directory'
+      cd /mnt/backups
+      echo 'Run Backup'
+      pihole -a -t /tmp/backu-pihole{{ansible_date_time.date}}.tar.gz&
+      # Record the process id and wait
+      process_id=$!
+      wait $process_id
+      echo "Backup complete with status $?"

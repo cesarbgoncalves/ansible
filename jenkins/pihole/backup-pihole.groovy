@@ -18,9 +18,8 @@ pipeline {
     }
 
     parameters {
-        booleanParam(name: 'Gerar_Backup', defaultValue: false)
+        booleanParam(name: 'Gerar_Backup', defaultValue: true)
         booleanParam(name: 'Enviar_AWS', defaultValue: false)
-        booleanParam(name: 'MYSQL_PIHOLE', defaultValue: true)
     }
 
     stages {
