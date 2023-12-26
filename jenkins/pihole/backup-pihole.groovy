@@ -40,6 +40,7 @@ pipeline {
             steps {
                 script {
                         script {
+                            sh 'sleep 100'
                             sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                         }
                 }
