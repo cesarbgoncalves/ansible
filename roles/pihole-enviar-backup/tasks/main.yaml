@@ -1,7 +1,7 @@
 - name: Copia arquivos de configuração da AWS
   ansible.builtin.copy:
-    src: /home/jenkins/.aws
-    dest: /root/.aws
+    src: /home/jenkins/.aws/
+    dest: /root/
     owner: root
     group: root
     mode: u=rw,g=r,o=r
