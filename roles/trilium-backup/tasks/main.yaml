@@ -2,7 +2,7 @@
 - name: Compactando Arquivo
   community.general.archive:
     path: /home/cesar/k8s_volumes/trilium_home/backup/backup-{{ansible_date_time.date}}.db
-    dest: /home/cesar/k8s_volumes/trilium_home/backup/backup-{{ansible_date_time.date}}.tar.gz
+    dest: /home/cesar/k8s_volumes/trilium_home/backup/backup-trilium{{ansible_date_time.date}}.tar.gz
     format: gz
     force_archive: true
   register: archive_result
