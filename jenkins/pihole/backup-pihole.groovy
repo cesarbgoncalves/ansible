@@ -15,6 +15,7 @@ pipeline {
         ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
+        AWS_CONFIG_FILE="/home/jenkins/.aws/config"
     }
 
     parameters {
@@ -40,6 +41,7 @@ pipeline {
             steps {
                 script {
                         script {
+                            sh 'sleep 60'
                             sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                         }
                 }
