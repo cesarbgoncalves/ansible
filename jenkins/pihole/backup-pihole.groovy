@@ -48,23 +48,20 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
+    post {
+        always {
+            echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
             
-    //         emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-    //             recipientProviders: 'cesarbgoncalves@gmail.com', [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-    //             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-    //     }
-    // }
+            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+        }
+    }
 }
 
 def getLimit(Map map = [:]) {
     def targetList = []
-    if (params.K3S) { targetList.push("k3s") }
-    if (params.OPNSENSE) { targetList.push("opnsense") }
-    if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
-    if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
+    if (params.Gerar_Backup) { targetList.push("mysql") }
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
