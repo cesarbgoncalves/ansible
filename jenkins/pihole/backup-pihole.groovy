@@ -30,7 +30,8 @@ pipeline {
             }
             steps {
                 script {
-                        sh buildCommand(playbook: "playbooks/pihole/backup-pihole.yaml")
+                    sh 'sleep 100'
+                    sh buildCommand(playbook: "playbooks/pihole/backup-pihole.yaml")
                 }
             }
         }
