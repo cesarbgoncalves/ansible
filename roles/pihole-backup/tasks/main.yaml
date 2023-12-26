@@ -5,7 +5,7 @@
       echo 'Change to mapped directory'
       cd /mnt/backups
       echo 'Run Backup'
-      pihole -a -t /tmp/backu-pihole{{ansible_date_time.date}}.tar.gz&
+      pihole -a -t /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz&
       # Record the process id and wait
       process_id=$!
       wait $process_id

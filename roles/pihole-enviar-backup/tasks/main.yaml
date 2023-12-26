@@ -3,7 +3,7 @@
     profile: cesar
     bucket: cesarbgoncalves
     object: /backup/pihole/pihole-bkp.{{ansible_date_time.date}}.tar.gz
-    src: /tmp/pihole-bkp.{{ansible_date_time.date}}.tar.gz
+    src: /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz
     mode: put
   register: putresult
 
