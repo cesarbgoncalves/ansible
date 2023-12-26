@@ -81,14 +81,11 @@ def getLimit(Map map = [:]) {
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
-    println(limit)
     return limit
 }
 
 def buildCommand(Map map = [:]) {
     def callback = map.useCallback ? "ANSIBLE_STDOUT_CALLBACK=diy" : ""
-    // def tags = map.tags ? map.tags.collect{ "--tags $it" }.join(" ") : ""
-    // def extra = map.extra ? map.extra.collect{entry -> "--extra-vars '${entry.key}=${entry.value}'"}.join(" ") : ""
     def verbose = (map.verbose != null ? map.verbose : true) ? "--verbose" : ""
     def list_hosts = (map.list_hosts != null ? map.list_hosts : false) ? "--list-hosts" : ""
     def limit = getLimit(map)

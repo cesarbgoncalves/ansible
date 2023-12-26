@@ -23,7 +23,6 @@ pipeline {
     }
 
     stages {
-        
         stage('Gerando Backup') {
             when {
                 expression { params.Gerar_Backup }
@@ -44,7 +43,6 @@ pipeline {
                         script {
                             sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                         }
-                
                 }
             }
         }
