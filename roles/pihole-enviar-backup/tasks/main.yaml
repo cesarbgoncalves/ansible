@@ -1,3 +1,12 @@
+- name: Copia arquivos de configuração da AWS
+  ansible.builtin.copy:
+    src: /home/jenkins/.aws
+    dest: /root/.aws
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
     profile: cesar
