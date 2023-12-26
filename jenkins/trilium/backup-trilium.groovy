@@ -15,7 +15,6 @@ pipeline {
         ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
-        // PATH="${PATH}:${WORKSPACE}/trilium-py/venv/bin"
     }
 
     parameters {
@@ -79,9 +78,6 @@ pipeline {
 def getLimit(Map map = [:]) {
     def targetList = []
     if (params.K3S) { targetList.push("k3s") }
-    // if (params.OPNSENSE) { targetList.push("opnsense") }
-    // if (params.NGINX_MANAGER) { targetList.push("nginx_manager") }
-    // if (params.MYSQL_PIHOLE) { targetList.push("mysql") }
 
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/

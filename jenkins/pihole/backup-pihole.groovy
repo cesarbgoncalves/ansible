@@ -12,7 +12,7 @@ pipeline {
         PYTHONUNBUFFERED="1"
         ANSIBLE_COLOR_CHANGED="blue"
         SSH_CREDENTIAL=credentials('ssh-root')
-        ANSIBLE_CONFIG="${PWD}/ansible.cfg"
+        ANSIBLE_CONFIG="${WORKSPACE}/ansible.cfg"
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
     }
@@ -30,7 +30,6 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'sleep 100'
                     sh buildCommand(playbook: "playbooks/pihole/backup-pihole.yaml")
                 }
             }
