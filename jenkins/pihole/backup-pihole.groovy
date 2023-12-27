@@ -16,8 +16,7 @@ pipeline {
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
-        ACCESS_KEY_ID="credentials('aws-pessoal-cesar').accessKey"
-        SECRET_ACCESS_KEY="credentials('aws-pessoal-cesar').secretKey"
+        AWS_DEFAULT_PROFILE="cesar"
     }
 
     parameters {
@@ -32,7 +31,6 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'sleep 100'
                     sh buildCommand(playbook: "playbooks/pihole/backup-pihole.yaml")
                 }
             }
@@ -44,7 +42,7 @@ pipeline {
             steps {
                 script {
                     script {
-                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
+                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_profile: "cesar")
                     }
                 }
             }
@@ -53,16 +51,13 @@ pipeline {
     post {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
-            
             emailext(
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: "cesarbgoncalves@gmail.com",
                 recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                to: "cesarbgoncalves@gmail.com"
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+                
             )
-            // emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
-            //     recipientProviders:'cesarbgoncalves@gmail.com',
-            //     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
 }
@@ -70,7 +65,6 @@ pipeline {
 def getLimit(Map map = [:]) {
     def targetList = []
     if (params.Gerar_Backup) { targetList.push("mysql") }
-
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
     return limit
@@ -87,7 +81,6 @@ def buildCommand(Map map = [:]) {
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$ \
-        -e ACCESS_KEY_ID=${ACCESS_KEY_ID} \
-        -e SECRET_ACCESS_KEY=${SECRET_ACCESS_KEY}
+        -e ACCESS_KEY_ID=${ACCESS_KEY_ID}
     """
 }
