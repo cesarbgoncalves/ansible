@@ -43,9 +43,12 @@ pipeline {
             }
             steps {
                 script {
-                        script {
+                        withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1'){
+                            script {
                             sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
+                            }
                         }
+                        
                 }
             }
         }
