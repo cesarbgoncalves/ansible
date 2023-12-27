@@ -43,12 +43,9 @@ pipeline {
             }
             steps {
                 script {
-                        withAWS(credentials: 'aws-pessoal-cesar', region: 'sa-east-1'){
-                            script {
-                            sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
-                            }
-                        }
-                        
+                    script {
+                    sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
+                    }
                 }
             }
         }
@@ -83,6 +80,6 @@ def buildCommand(Map map = [:]) {
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e base_path=\$PWD
+        -e base_path=\$ -e ACCESS_KEY_ID=$ACCESS_KEY_ID -e SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
     """
 }
