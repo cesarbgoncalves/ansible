@@ -1,6 +1,5 @@
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
-    profile: cesar
     bucket: cesarbgoncalves
     object: /backup/trilium/backup-{{ansible_date_time.date}}.tar.gz
     src: /home/cesar/k8s_volumes/trilium_home/backup/backup-trilium{{ansible_date_time.date}}.tar.gz

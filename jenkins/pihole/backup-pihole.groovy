@@ -16,6 +16,9 @@ pipeline {
         SHELL="/bin/bash"
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
+        ACCESS_KEY_ID = credentials('aws-pessoal-cesar').accessKey
+        SECRET_ACCESS_KEY = credentials('aws-pessoal-cesar').secretKey
+
     }
 
     parameters {
