@@ -18,7 +18,6 @@ pipeline {
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
         ACCESS_KEY_ID="credentials('aws-pessoal-cesar').accessKey"
         SECRET_ACCESS_KEY="credentials('aws-pessoal-cesar').secretKey"
-
     }
 
     parameters {
@@ -44,7 +43,7 @@ pipeline {
             steps {
                 script {
                     script {
-                    sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
+                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                     }
                 }
             }
@@ -80,6 +79,8 @@ def buildCommand(Map map = [:]) {
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e base_path=\$ -e ACCESS_KEY_ID=$ACCESS_KEY_ID -e SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
+        -e base_path=\$ \
+        -e ACCESS_KEY_ID=$ACCESS_KEY_ID \
+        -e SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
     """
 }
