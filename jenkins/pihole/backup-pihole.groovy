@@ -17,6 +17,8 @@ pipeline {
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
         AWS_DEFAULT_PROFILE="cesar"
+        CUSTOM_ACCESS_KEY_ID=''
+        CUSTOM_SECRET_ACCESS_KEY=''
     }
 
     parameters {
@@ -42,7 +44,9 @@ pipeline {
             steps {
                 script {
                     script {
-                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_profile: "cesar")
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'CUSTOM_ACCESS_KEY_ID', secretKeyVariable: 'CUSTOM_SECRET_ACCESS_KEY']]) {
+
+                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: $CUSTOM_ACCESS_KEY_ID, aws_secret_key: $CUSTOM_SECRET_ACCESS_KEY )
                     }
                 }
             }
@@ -81,6 +85,7 @@ def buildCommand(Map map = [:]) {
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$ \
-        -e AWS_DEFAULT_PROFILE=${map.aws_profile}
+        -e aws_access_key=${map.aws_access_key} \
+        -e aws_secret_key=${map.aws_secret_key}
     """
 }
