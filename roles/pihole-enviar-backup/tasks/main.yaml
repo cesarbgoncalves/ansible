@@ -1,14 +1,13 @@
-- name: Copia arquivos de configuração da AWS
-  ansible.builtin.copy:
-    src: /home/jenkins/.aws/
-    dest: /root/
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+# - name: Copia arquivos de configuração da AWS
+#   ansible.builtin.copy:
+#     src: /home/jenkins/.aws/
+#     dest: /root/
+#     owner: root
+#     group: root
+#     mode: u=rw,g=r,o=r
 
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
-    profile: cesar
     bucket: cesarbgoncalves
     object: /backup/pihole/pihole-bkp.{{ansible_date_time.date}}.tar.gz
     src: /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz
