@@ -13,6 +13,7 @@
     object: /backup/pihole/pihole-bkp.{{ansible_date_time.date}}.tar.gz
     src: /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz
     mode: put
+    debug_botocore_endpoint_logs: true
   register: putresult
 
 - debug: msg="{{ putresult.msg }} e a URL do objeto é {{putresult.url}}"
