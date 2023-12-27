@@ -6,7 +6,6 @@
     group: root
     mode: u=rw,g=r,o=r
 
-
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
     profile: cesar

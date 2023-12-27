@@ -81,6 +81,6 @@ def buildCommand(Map map = [:]) {
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$ \
-        -e AWS_DEFAULT_PROFILE=${AWS_DEFAULT_PROFILE}
+        -e AWS_DEFAULT_PROFILE=${map.aws_profile}
     """
 }
