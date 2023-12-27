@@ -32,6 +32,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh 'sleep 100'
                     sh buildCommand(playbook: "playbooks/pihole/backup-pihole.yaml")
                 }
             }
@@ -80,7 +81,7 @@ def buildCommand(Map map = [:]) {
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$ \
-        -e ACCESS_KEY_ID=$ACCESS_KEY_ID \
-        -e SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
+        -e ACCESS_KEY_ID=${ACCESS_KEY_ID} \
+        -e SECRET_ACCESS_KEY=${SECRET_ACCESS_KEY}
     """
 }
