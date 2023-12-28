@@ -2,12 +2,8 @@
 - name: Localizando arquivos compactados
   ansible.builtin.find:
     path: /home/cesar/k8s_volumes/trilium_home/backup
-    patterns: "*.tar.gz"
+    patterns: "*.tar.gz,backup-20*.db"
   register: find_results
-
-- name: Mostrando arquivos encontrados
-  ansible.builtin.debug:
-    var: find_results
 
 - name: Excluindo Arquivo de backup criado
   ansible.builtin.file:
