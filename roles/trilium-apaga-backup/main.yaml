@@ -1,0 +1,5 @@
+# roles
+- name: Excluindo Arquivo de backup criado
+  ansible.builtin.file:
+    path: /home/cesar/k8s_volumes/trilium_home/backup/backup-trilium{{ansible_date_time.date}}.tar.gz
+    state: absent

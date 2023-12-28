@@ -1,0 +1,9 @@
+# Playbook
+- name: Apagando o backup gerado
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    ANSIBLE_CONFIG: ./ansible.cfg
+  roles:
+    - role: trilium-apaga-backup
