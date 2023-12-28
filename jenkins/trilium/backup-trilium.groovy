@@ -61,7 +61,6 @@ pipeline {
             }
         }
     }
-}
     post {
         success {
             script {
@@ -76,6 +75,7 @@ pipeline {
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
+}
 
 def getLimit(Map map = [:]) {
     def targetList = []
