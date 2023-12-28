@@ -41,10 +41,10 @@ pipeline {
             }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    def creds = readJSON text: secret
-                    env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
-                    env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
-                    env.AWS_REGION = 'sa-east-1'
+                    // def creds = readJSON text: secret
+                    // env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
+                    // env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                    // env.AWS_REGION = 'sa-east-1'
                     sh 'set'
                     sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                 }
