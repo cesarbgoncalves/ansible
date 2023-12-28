@@ -17,8 +17,8 @@ pipeline {
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
         AWS_DEFAULT_PROFILE="cesar"
-        CUSTOM_ACCESS_KEY_ID=''
-        CUSTOM_SECRET_ACCESS_KEY=''
+        CUSTOM_ACCESS_KEY_ID=credentials('jenkins-aws-secret-key-id')
+        CUSTOM_SECRET_ACCESS_KEY=credentials('jenkins-aws-secret-access-key')
     }
 
     parameters {
@@ -43,10 +43,11 @@ pipeline {
             }
             steps {
                 script {
-                    script {
-                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'CUSTOM_ACCESS_KEY_ID', secretKeyVariable: 'CUSTOM_SECRET_ACCESS_KEY']]) {
-                            sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "$CUSTOM_ACCESS_KEY_ID", aws_secret_key: $CUSTOM_SECRET_ACCESS_KEY )
-                        }
+                    withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'aws_credentials')]) {
+                        def creds = readJSON text: aws_credentials
+                        CUSTOM_ACCESS_KEY_ID = creds['accessKeyId']
+                        CUSTOM_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "$CUSTOM_ACCESS_KEY_ID", aws_secret_key: "$CUSTOM_SECRET_ACCESS_KEY" )
                     }
                 }
             }
