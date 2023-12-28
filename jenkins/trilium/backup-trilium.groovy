@@ -55,15 +55,13 @@ pipeline {
                 expression { params.Enviar_AWS }
             }
             steps {
-                script {
-                        script {
-                            sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml")
-                        }
-                
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh buildCommand(playbook: "playbooks/trilium/enviar-backup.yaml", aws_access_key: "${AWS_ACCESS_KEY_ID}", aws_secret_key: "${AWS_SECRET_ACCESS_KEY}")
                 }
             }
         }
     }
+}
     post {
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
@@ -73,7 +71,6 @@ pipeline {
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
-}
 
 def getLimit(Map map = [:]) {
     def targetList = []
@@ -88,12 +85,16 @@ def buildCommand(Map map = [:]) {
     def callback = map.useCallback ? "ANSIBLE_STDOUT_CALLBACK=diy" : ""
     def verbose = (map.verbose != null ? map.verbose : true) ? "--verbose" : ""
     def list_hosts = (map.list_hosts != null ? map.list_hosts : false) ? "--list-hosts" : ""
+    def aws_access_key = (map.aws_access_key)
+    def aws_secret_key = (map.aws_secret_key)    
     def limit = getLimit(map)
 
     return """
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e base_path=\$PWD
+        -e base_path=\$PWD \
+        -e AWS_ACCESS_KEY_ID=$aws_access_key \
+        -e AWS_SECRET_ACCESS_KEY=$aws_secret_key
     """
 }

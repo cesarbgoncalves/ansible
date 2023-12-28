@@ -41,7 +41,6 @@ pipeline {
             }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh 'set'
                     sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "${AWS_ACCESS_KEY_ID}", aws_secret_key: "${AWS_SECRET_ACCESS_KEY}")
                 }
             }
