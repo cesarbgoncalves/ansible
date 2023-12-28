@@ -8,8 +8,6 @@
 
 - name: Enviar arquivo compactado para o S3
   amazon.aws.aws_s3:
-    access_key: {{ aws_access_key }}
-    secret_key: {{ aws_secret_key }}
     bucket: cesarbgoncalves
     object: /backup/pihole/pihole-bkp.{{ansible_date_time.date}}.tar.gz
     src: /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz
