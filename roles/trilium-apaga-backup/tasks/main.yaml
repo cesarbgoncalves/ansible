@@ -8,7 +8,6 @@
 - name: Mostrando arquivos encontrados
   ansible.builtin.debug:
     var: find_results
-    verbosity: 2
 
 - name: Excluindo Arquivo de backup criado
   ansible.builtin.file:
