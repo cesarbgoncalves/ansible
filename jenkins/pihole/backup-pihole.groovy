@@ -17,8 +17,6 @@ pipeline {
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
         AWS_DEFAULT_PROFILE="cesar"
-        CUSTOM_ACCESS_KEY_ID=credentials('jenkins-aws-secret-key-id')
-        CUSTOM_SECRET_ACCESS_KEY=credentials('jenkins-aws-secret-access-key')
     }
 
     parameters {
