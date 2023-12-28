@@ -40,7 +40,7 @@ pipeline {
                 expression { params.Enviar_AWS }
             }
             steps {
-                withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'secret')]) {
+                withCredentials([credentialsId: 'aws-pessoal-cesar', variable: 'secret']) {
                     script {
                         def creds = readJSON text: secret
                         env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
@@ -49,12 +49,6 @@ pipeline {
                         sh 'set'
                         sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                     }
-                    // withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'aws_credentials')]) {
-                    //     def creds = readJSON text: aws_credentials
-                    //     CUSTOM_ACCESS_KEY_ID = creds['accessKeyId']
-                    //     CUSTOM_SECRET_ACCESS_KEY = creds['secretAccessKey']
-                    //     sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "$CUSTOM_ACCESS_KEY_ID", aws_secret_key: "$CUSTOM_SECRET_ACCESS_KEY" )
-                    // }
                 }
             }
         }

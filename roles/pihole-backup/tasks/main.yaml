@@ -2,11 +2,4 @@
 - name: Gerando backup Pihole
   shell:
     cmd: |
-      echo 'Change to mapped directory'
-      cd /mnt/backups
-      echo 'Run Backup'
-      pihole -a -t /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz&
-      # Record the process id and wait
-      process_id=$!
-      wait $process_id
-      echo "Backup complete with status $?"
+      pihole -a -t /tmp/backup-pihole-{{ansible_date_time.date}}.tar.gz
