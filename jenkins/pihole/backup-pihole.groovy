@@ -40,7 +40,7 @@ pipeline {
                 expression { params.Enviar_AWS }
             }
             steps {
-                withCredentials([credentialsId: 'aws-pessoal-cesar', variable: 'secret']) {
+                withCredentials(credentialsId: 'aws-pessoal-cesar', variable: 'secret') {
                     script {
                         def creds = readJSON text: secret
                         env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
