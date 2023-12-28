@@ -41,12 +41,15 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'aws_credentials')]) {
-                        def creds = readJSON text: aws_credentials
-                        CUSTOM_ACCESS_KEY_ID = creds['accessKeyId']
-                        CUSTOM_SECRET_ACCESS_KEY = creds['secretAccessKey']
-                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "$CUSTOM_ACCESS_KEY_ID", aws_secret_key: "$CUSTOM_SECRET_ACCESS_KEY" )
+                    withAWS(profile: 'cesar') {
+                        sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml")
                     }
+                    // withCredentials([string(credentialsId: 'aws-pessoal-cesar', variable: 'aws_credentials')]) {
+                    //     def creds = readJSON text: aws_credentials
+                    //     CUSTOM_ACCESS_KEY_ID = creds['accessKeyId']
+                    //     CUSTOM_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                    //     sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "$CUSTOM_ACCESS_KEY_ID", aws_secret_key: "$CUSTOM_SECRET_ACCESS_KEY" )
+                    // }
                 }
             }
         }
@@ -86,7 +89,7 @@ def buildCommand(Map map = [:]) {
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
         -e base_path=\$ \
-        -e aws_access_key=$aws_access_key \
-        -e aws_secret_key=$aws_secret_key
+        // -e aws_access_key=$aws_access_key \
+        // -e aws_secret_key=$aws_secret_key
     """
 }
