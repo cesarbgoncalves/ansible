@@ -1,5 +1,12 @@
 # roles
+- name: Localizando arquivos compactados
+  ansible.builtin.find:
+    path: /home/cesar/k8s_volumes/trilium_home/backup
+    patterns: "*.tar.gz"
+  register: find_results
+
 - name: Excluindo Arquivo de backup criado
   ansible.builtin.file:
-    path: /home/cesar/k8s_volumes/trilium_home/backup/backup-trilium{{ansible_date_time.date}}.tar.gz
+    path: "{{ item['path'] }}"
     state: absent
+  with_items: "{{ find_results['files'] }}"
