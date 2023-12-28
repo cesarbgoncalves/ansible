@@ -47,6 +47,11 @@ pipeline {
         }
     }
     post {
+        success {
+            script {
+                sh buildCommand(playbook: "playbooks/pihole/apaga-backup.yaml")
+            }
+        }
         always {
             echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
             emailext(

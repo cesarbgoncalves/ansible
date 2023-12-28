@@ -1,0 +1,12 @@
+# roles
+- name: Localizando arquivos compactados
+  ansible.builtin.find:
+    path: /tmp
+    patterns: "*.tar.gz"
+  register: find_results
+
+- name: Excluindo Arquivo de backup criado
+  ansible.builtin.file:
+    path: "{{ item['path'] }}"
+    state: absent
+  with_items: "{{ find_results['files'] }}"
