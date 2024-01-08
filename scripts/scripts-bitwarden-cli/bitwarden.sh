@@ -7,6 +7,6 @@ bw login --apikey > /dev/null 2>&1
 bw unlock --passwordenv BW_PASSWORD > /dev/null 2>&1
 
 lista="ola mundo"
-lista=$(bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'`)
+lista=$(bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id')
 
 printf "$lista"
