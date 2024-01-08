@@ -40,8 +40,6 @@ pipeline {
                         set
                         bw config server https://bitwarden.cesarbgoncalves.com.br
                         bw login --apikey
-                        bw unlock --passwordenv BW_PASSWORD
-                        bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
                     ''')
                     
                 }
@@ -56,6 +54,7 @@ pipeline {
             steps {
                 script {
                     sh(script:'''
+                        bw unlock --passwordenv BW_PASSWORD
                         bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
                     ''')
                     
