@@ -38,7 +38,7 @@ pipeline {
                 script {
                     sh(script:'''
                         set
-                        bw config server https://bitwarden.cesarbgoncalves.com.br"
+                        bw config server https://bitwarden.cesarbgoncalves.com.br
                         bw login --apikey
                         export BW_SESSION=$(bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print $2}')
                         bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
