@@ -14,5 +14,6 @@ lista=$(bw list items --session ${BW_SESSION} --folderid 29752335-d158-4a48-b036
 
 
 
-for item in ${lista}:
+for item in ${lista}; do
     printf "$item"
+done
