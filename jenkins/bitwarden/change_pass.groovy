@@ -47,6 +47,21 @@ pipeline {
                 }
             }
         }
+        stage('Listando itens') {
+            environment {
+                BW_CLIENTID = credentials('BW_CLIENTID')
+                BW_CLIENTSECRET = credentials('BW_CLIENTSECRET')
+                BW_PASSWORD = credentials('BW_PASSWORD')
+            }
+            steps {
+                script {
+                    sh(script:'''
+                        bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
+                    ''')
+                    
+                }
+            }
+        }
         // stage('Enviando para a AWS') {
         //     when {
         //         expression { params.Enviar_AWS }
