@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     sh "chmod ug+x scripts/scripts-bitwarden-cli/bitwarden.sh"
-                    // sh "scripts/scripts-bitwarden-cli/bitwarden.sh $BW_CLIENTID $BW_CLIENTSECRET $BW_PASSWORD"
+                    sh "scripts/scripts-bitwarden-cli/bitwarden.sh $BW_CLIENTID $BW_CLIENTSECRET $BW_PASSWORD"
                 }
             }
         }
