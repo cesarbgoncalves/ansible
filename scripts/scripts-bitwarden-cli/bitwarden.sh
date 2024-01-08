@@ -15,8 +15,7 @@ lista=$(bw list items --session ${BW_SESSION} --folderid 29752335-d158-4a48-b036
 
 
 for item in ${lista}; do
-# bw get item $item | jq '.login.password="$NOVA_SENHA"' | bw encode | bw edit item $item
-printf "agora vai o item $item usando a senha $NOVA_SENHA \n"
+    bw get item $item | jq '.login.password="$NOVA_SENHA"' | bw encode | bw edit item $item
 done
 
 bw sync
