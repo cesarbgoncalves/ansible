@@ -36,28 +36,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh(script:'''
-                        set
-                        bw config server https://bitwarden.cesarbgoncalves.com.br
-                        bw login --apikey
-                    ''')
-                    
-                }
-            }
-        }
-        stage('Listando itens') {
-            environment {
-                BW_CLIENTID = credentials('BW_CLIENTID')
-                BW_CLIENTSECRET = credentials('BW_CLIENTSECRET')
-                BW_PASSWORD = credentials('BW_PASSWORD')
-            }
-            steps {
-                script {
-                    sh(script:'''
-                        bw unlock --passwordenv BW_PASSWORD
-                        bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
-                    ''')
-                    
+                    sh "chmod ug+x scripts/scripts-bitwarden-cli/bitwarden.sh"
+                    sh "scripts/scripts-bitwarden-cli/bitwarden.sh $BW_CLIENTID $BW_CLIENTSECRET $BW_PASSWORD >/dev/null 2>&1"
                 }
             }
         }
