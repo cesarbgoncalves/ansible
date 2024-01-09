@@ -39,7 +39,7 @@ pipeline {
                     sh(script: """
                     bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
                     bw login --apikey
-                    bw unlock --passwordenv BW_PASSWORD --quiet
+                    bw unlock --passwordenv BW_PASSWORD
                     bw list items --folderid '29752335-d158-4a48-b036-f206289ce954'
                     """)
                 }
