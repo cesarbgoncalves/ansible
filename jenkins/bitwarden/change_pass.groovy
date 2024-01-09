@@ -39,27 +39,11 @@ pipeline {
                     sh "bw config server https://bitwarden.cesarbgoncalves.com.br --quiet"
                     sh "bw login --apikey --quiet"
                     println "${comando}"
-                    def BW_SESSION = sh(returnStdout: true, script:"""bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \\\$2}'""").trim()
+                    def BW_SESSION = sh(returnStdout: true, script:"""bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \$2}'""").trim()
                     sh "bw list items --session ${BW_SESSION} --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'"
                 }
             }
-            // steps {
-            //     script {
-            //         sh "chmod ug+x scripts/scripts-bitwarden-cli/bitwarden.sh"
-            //         sh "scripts/scripts-bitwarden-cli/bitwarden.sh '$BW_CLIENTID' '$BW_CLIENTSECRET' '$BW_PASSWORD' '$NOVA_SENHA'"
-            //     }
-            // }
         }
-        // stage('Enviando para a AWS') {
-        //     when {
-        //         expression { params.Enviar_AWS }
-        //     }
-        //     steps {
-        //         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-pessoal-cesar', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-        //             sh buildCommand(playbook: "playbooks/pihole/enviar-backup.yaml", aws_access_key: "${AWS_ACCESS_KEY_ID}", aws_secret_key: "${AWS_SECRET_ACCESS_KEY}")
-        //         }
-        //     }
-        // }
     }
     // post {
     //     success {
