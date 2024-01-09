@@ -41,6 +41,7 @@ pipeline {
                     def comando = """
                         bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \\\$2}'
                     """
+                    println "${comando}"
                     def BW_SESSION = sh(returnStdout: true, script:"$comando")
                     sh "bw list items --session ${BW_SESSION} --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'"
                 }
