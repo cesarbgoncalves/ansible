@@ -38,8 +38,9 @@ pipeline {
                 script {
                     sh(script: """
                     bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
-                    bw login --apikey
-                    export BW_SESSION=`bw list items --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'`
+                    bw login --apikey --quiet
+                    bw unlock --passwordenv BW_PASSWORD --quiet
+                    bw list items --folderid '29752335-d158-4a48-b036-f206289ce954'
                     """)
                 }
             }
