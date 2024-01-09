@@ -36,12 +36,13 @@ pipeline {
             }
             steps {
                 script {
-                    sh(script: """
-                    bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
-                    bw login --apikey
-                    bw unlock --passwordenv BW_PASSWORD
-                    bw list items --folderid '29752335-d158-4a48-b036-f206289ce954'
-                    """)
+                    sh buildCommand(playbook: "playbooks/bitwarden/troca-senha.yaml")
+                    // sh(script: """
+                    // bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
+                    // bw login --apikey
+                    // bw unlock --passwordenv BW_PASSWORD
+                    // bw list items --folderid '29752335-d158-4a48-b036-f206289ce954'
+                    // """)
                 }
             }
         }
@@ -67,7 +68,7 @@ pipeline {
 
 def getLimit(Map map = [:]) {
     def targetList = []
-    if (params.Gerar_Backup) { targetList.push("mysql") }
+    if (params.Gerar_Backup) { targetList.push("localhost") }
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
     return limit

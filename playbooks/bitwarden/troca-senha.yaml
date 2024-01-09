@@ -1,0 +1,9 @@
+# Playbook
+- name: Alterando SEnha
+  hosts: localhost
+  become: true
+  gather_facts: true
+  vars:
+    ANSIBLE_CONFIG: ./ansible.cfg
+  roles:
+    - role: bitwarden-troca-senha

@@ -1,0 +1,15 @@
+# roles
+- name: Preparando a troca de senha
+  shell:
+    cmd: |
+      bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
+      bw login --apikey --quiet
+      bw unlock --passwordenv BW_PASSWORD
+  register: archive_result
+
+- name: Iniciando a sessão
+  vars:
+    BW_SESSION: "{{ output.stdout | regex_replace('export BW_SESSION=\"(.*?)\"', '\\1') }}"
+  shell:
+    cmd: |
+      bw list items --folderid 29752335-d158-4a48-b036-f206289ce954 | jq -r '.[].id'
