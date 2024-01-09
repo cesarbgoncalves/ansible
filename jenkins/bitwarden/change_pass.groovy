@@ -36,7 +36,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "config server https://bitwarden.cesarbgoncalves.com.br --quiet"
+                    sh "bw config server https://bitwarden.cesarbgoncalves.com.br --quiet"
                     sh "bw login --apikey --quiet"
                     def comando = """
                     bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" \'{print \$\2}\'
