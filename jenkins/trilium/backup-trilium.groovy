@@ -35,7 +35,7 @@ pipeline {
                     python3 -m venv venv
                     source ./venv/bin/activate
                     pip install trilium-py
-                    python3 scripts-trilium/backup.py
+                    python3 scripts/scripts-trilium/backup.py
                     """
                 }
             }
