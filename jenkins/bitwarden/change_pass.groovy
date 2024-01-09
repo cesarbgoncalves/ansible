@@ -38,7 +38,7 @@ pipeline {
                 script {
                     sh "bw config server https://bitwarden.cesarbgoncalves.com.br --quiet"
                     sh "bw login --apikey --quiet"
-                    sh "bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \\\$2}'"
+                    sh "bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print $2}'"
                     // def BW_SESSION = sh(returnStdout: true, script:"""bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \$2}'""")
                     sh "bw list items --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'"
                 }
