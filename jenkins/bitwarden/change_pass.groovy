@@ -36,11 +36,12 @@ pipeline {
             }
             steps {
                 script {
-                    sh "bw config server https://bitwarden.cesarbgoncalves.com.br --quiet"
-                    sh "bw login --apikey --quiet"
-                    sh "bw unlock --passwordenv BW_PASSWORD --quiet"
-                    // def BW_SESSION = sh(returnStdout: true, script:"""bw unlock --passwordenv BW_PASSWORD | grep export | awk -F"'" '{print \$2}'""")
-                    sh "bw list items --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'"
+                    sh(script: """
+                    bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
+                    bw login --apikey --quiet
+                    bw unlock --passwordenv BW_PASSWORD --quiet
+                    bw list items --folderid '29752335-d158-4a48-b036-f206289ce954' | jq -r '.[].name'
+                    """)
                 }
             }
         }
