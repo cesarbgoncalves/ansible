@@ -15,6 +15,7 @@ lista=$(bw list items --session ${BW_SESSION} --folderid 29752335-d158-4a48-b036
 
 
 for item in ${lista}; do
+export BW_PASSWORD=$3
     bw get item $item --session ${BW_SESSION}| jq '.login.password="$NOVA_SENHA"' | bw encode | bw edit item $item
 done
 
