@@ -36,7 +36,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh "python3 scripts/scripts-bitwarden-cli/bitwarden.py '$BW_CLIENTID' '$BW_CLIENTSECRET' '$BW_PASSWORD' '$NOVA_SENHA'"
+                    sh "chmod ug+x scripts/scripts-bitwarden-cli/bitwarden.sh"
+                    sh "scripts/scripts-bitwarden-cli/bitwarden.sh '$BW_CLIENTID' '$BW_CLIENTSECRET' '$BW_PASSWORD' '$NOVA_SENHA'"
                 }
             }
         }
