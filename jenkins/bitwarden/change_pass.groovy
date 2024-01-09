@@ -86,7 +86,6 @@ def buildCommand(Map map = [:]) {
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
         -i hosts/proxmox.yaml $limit \
         --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e base_path=\$ \
         -e AWS_ACCESS_KEY_ID=$aws_access_key \
         -e AWS_SECRET_ACCESS_KEY=$aws_secret_key
     """
