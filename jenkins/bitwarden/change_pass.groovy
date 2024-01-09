@@ -68,7 +68,7 @@ pipeline {
 
 def getLimit(Map map = [:]) {
     def targetList = []
-    if (params.Gerar_Backup) { targetList.push("localhost") }
+    if (params.Gerar_Backup) { targetList.push("k3s") }
     def limit = targetList.join(',')
     if (limit) limit = /--limit '${limit.toLowerCase()}'/
     return limit
