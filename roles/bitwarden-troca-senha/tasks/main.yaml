@@ -10,6 +10,7 @@
     BW_CLIENTSECRET: "{{ BW_CLIENTSECRET }}"
   shell:
     cmd: |
+      echo "Efetuando o login"
       bw login --apikey --quiet
 
 - name: Desbloqueando o cofre
