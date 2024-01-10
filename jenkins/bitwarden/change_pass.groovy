@@ -17,6 +17,9 @@ pipeline {
         TZ="America/Sao_Paulo"
         AWS_CONFIG_FILE="/home/jenkins/.aws/config"
         AWS_DEFAULT_PROFILE="cesar"
+        BW_CLIENTID = credentials('BW_CLIENTID')
+        BW_CLIENTSECRET = credentials('BW_CLIENTSECRET')
+        BW_PASSWORD = credentials('BW_PASSWORD')
     }
 
     parameters {
