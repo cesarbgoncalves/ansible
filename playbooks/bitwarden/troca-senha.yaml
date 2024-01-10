@@ -1,6 +1,6 @@
 # Playbook
 - name: Alterando SEnha
-  hosts: localhost
+  hosts: all
   become: true
   gather_facts: true
   vars:
