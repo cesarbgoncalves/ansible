@@ -10,9 +10,11 @@
     BW_CLIENTSECRET: "{{ BW_CLIENTSECRET }}"
   shell:
     cmd: |
-      bw login --apikey
+      bw login --apikey --quiet
 
 - name: Desbloqueando o cofre
+  vars:
+    BW_PASSWORD: "{{ BW_PASSWORD }}"
   shell:
     cmd: |
       bw unlock --passwordenv BW_PASSWORD
