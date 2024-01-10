@@ -40,33 +40,10 @@ pipeline {
             steps {
                 script {
                     sh buildCommand(playbook: "playbooks/bitwarden/troca-senha.yaml")
-                    // sh(script: """
-                    // bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
-                    // bw login --apikey
-                    // bw unlock --passwordenv BW_PASSWORD
-                    // bw list items --folderid '29752335-d158-4a48-b036-f206289ce954'
-                    // """)
                 }
             }
         }
     }
-    // post {
-    //     success {
-    //         script {
-    //             sh buildCommand(playbook: "playbooks/pihole/apaga-backup.yaml")
-    //         }
-    //     }
-    //     always {
-    //         echo 'Enviando e-mail para cesarbgoncalves@gmail.com'
-    //         emailext(
-    //             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-    //             to: "cesarbgoncalves@gmail.com",
-    //             recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-    //             body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
-                
-    //         )
-    //     }
-    // }
 }
 
 def getLimit(Map map = [:]) {
