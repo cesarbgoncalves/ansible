@@ -6,8 +6,8 @@
 
 - name: Iniciando o Login
   vars:
-    BW_CLIENTID: {{ BW_CLIENTID }}
-    BW_CLIENTSECRET: {{ BW_CLIENTSECRET }}
+    BW_CLIENTID: "{{ BW_CLIENTID }}"
+    BW_CLIENTSECRET: "{{ BW_CLIENTSECRET }}"
   shell:
     cmd: |
       bw login --apikey
