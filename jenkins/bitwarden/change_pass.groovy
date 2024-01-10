@@ -23,7 +23,7 @@ pipeline {
     }
 
     parameters {
-        password(name: 'NOVA_SENHA', defaultValue: '', description: 'Digite a nova senha')
+        password(name: 'NOVA_SENHA', defaultValue: 'mudar_a_senha', description: 'Digite a nova senha')
 
     }
 
@@ -39,7 +39,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh buildCommand(playbook: "playbooks/bitwarden/troca-senha.yaml")
+                    echo teste
+                    // sh buildCommand(playbook: "playbooks/bitwarden/troca-senha.yaml")
                     // sh(script: """
                     // bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
                     // bw login --apikey
