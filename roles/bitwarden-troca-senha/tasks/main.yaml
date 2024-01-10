@@ -1,13 +1,21 @@
 # roles
-- name: Preparando a troca de senha
+- name: Configurando o Servidor Bitwarden
   shell:
     cmd: |
       bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
+
+- name: Iniciando o Login
+  shell:
+    cmd: |
       bw login --apikey --quiet
+
+- name: Desbloqueando o cofre
+  shell:
+    cmd: |
       bw unlock --passwordenv BW_PASSWORD
   register: archive_result
 
-- name: Iniciando a sessão
+- name: Listando itens
   vars:
     BW_SESSION: "{{ output.stdout | regex_replace('export BW_SESSION=\"(.*?)\"', '\\1') }}"
   shell:
