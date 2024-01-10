@@ -1,5 +1,5 @@
 # Playbook
-- name: Alterando SEnha
+- name: Alterando a Senha
   hosts: all
   become: true
   gather_facts: true

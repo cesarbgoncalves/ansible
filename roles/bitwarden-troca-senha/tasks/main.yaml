@@ -7,7 +7,7 @@
 - name: Iniciando o Login
   shell:
     cmd: |
-      bw login --apikey --quiet
+      bw login --apikey
 
 - name: Desbloqueando o cofre
   shell:
