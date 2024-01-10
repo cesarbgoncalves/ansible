@@ -1,13 +1,16 @@
 # roles
+# 1.0
 - name: Configurando o Servidor Bitwarden
   shell:
     cmd: |
       bw config server https://bitwarden.cesarbgoncalves.com.br
   register: config_server
 
+# 1.1
 - name: Mostrando resultado da configuração do servidor Bitwarden
   debug:
     var: config_server.stdout_lines
+  verbosity: 2
 
 - name: Iniciando o Login
   vars:
