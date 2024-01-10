@@ -39,7 +39,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo teste
+                    echo 'teste'
                     // sh buildCommand(playbook: "playbooks/bitwarden/troca-senha.yaml")
                     // sh(script: """
                     // bw config server https://bitwarden.cesarbgoncalves.com.br --quiet
