@@ -65,11 +65,11 @@ def buildCommand(Map map = [:]) {
     return """
         $callback ansible-playbook $verbose ${map.playbook} $list_hosts \
         -i hosts/proxmox.yaml $limit \
-        --user=$SSH_CREDENTIAL_USR --private-key=$SSH_CREDENTIAL \
-        -e AWS_ACCESS_KEY_ID=$aws_access_key \
-        -e AWS_SECRET_ACCESS_KEY=$aws_secret_key \
-        -e BW_CLIENTID = $BW_CLIENTID \
-        -e BW_CLIENTSECRET = $BW_CLIENTSECRET \
-        -e BW_PASSWORD = $BW_PASSWORD
+        --user='$SSH_CREDENTIAL_USR' --private-key='$SSH_CREDENTIAL' \
+        -e AWS_ACCESS_KEY_ID='$aws_access_key' \
+        -e AWS_SECRET_ACCESS_KEY='$aws_secret_key' \
+        -e BW_CLIENTID = '$BW_CLIENTID' \
+        -e BW_CLIENTSECRET = '$BW_CLIENTSECRET' \
+        -e BW_PASSWORD = '$BW_PASSWORD'
     """
 }
