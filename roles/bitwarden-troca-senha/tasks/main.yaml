@@ -9,7 +9,7 @@
 - name: Mostrando resultado da configuração do servidor Bitwarden
   debug:
     var: config_server.stdout_lines
-  verbosity: 2
+  verbosity: 3
 
 - name: Iniciando o Login
   vars:
